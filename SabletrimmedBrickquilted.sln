@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36908.2 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SabletrimmedBrickquilted", "SabletrimmedBrickquilted.csproj", "{3C08F65E-D198-4069-9DB8-1695FEBE6127}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SabletrimmedBrickquilted.API", "SabletrimmedBrickquilted.API.csproj", "{3C08F65E-D198-4069-9DB8-1695FEBE6127}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{99210F91-4474-47F5-BCD5-7831B11F916C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +22,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3C08F65E-D198-4069-9DB8-1695FEBE6127} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {069D1037-AF47-4FD7-8405-7B72C7A697BD}
