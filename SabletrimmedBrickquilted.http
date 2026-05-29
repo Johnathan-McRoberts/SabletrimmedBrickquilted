@@ -1,0 +1,6 @@
+@SabletrimmedBrickquilted_HostAddress = http://localhost:5122
+
+GET {{SabletrimmedBrickquilted_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
