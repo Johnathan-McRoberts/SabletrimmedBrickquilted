@@ -16,7 +16,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="Libraries\SabletrimmedBrickquilted.Dtos\SabletrimmedBrickquilted.Dtos.csproj" />
+	  <ProjectReference Include="..\SabletrimmedBrickquilted.Dtos\SabletrimmedBrickquilted.Dtos.csproj" />
+	  <ProjectReference Include="..\SabletrimmedBrickquilted.Services\SabletrimmedBrickquilted.Services.csproj" />
 	</ItemGroup>
 
 </Project>
