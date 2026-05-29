@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>5654a1f4-f372-4a37-a4e3-b55b724fd7f3</UserSecretsId>
 
-  </PropertyGroup>
+	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Scrutor" Version="7.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="9.0.6" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.6" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\SabletrimmedBrickquilted.Dtos\SabletrimmedBrickquilted.Dtos.csproj" />
-	  <ProjectReference Include="..\SabletrimmedBrickquilted.Services\SabletrimmedBrickquilted.Services.csproj" />
+		<ProjectReference Include="..\SabletrimmedBrickquilted.Dtos\SabletrimmedBrickquilted.Dtos.csproj" />
+		<ProjectReference Include="..\SabletrimmedBrickquilted.Services\SabletrimmedBrickquilted.Services.csproj" />
 	</ItemGroup>
 
 </Project>

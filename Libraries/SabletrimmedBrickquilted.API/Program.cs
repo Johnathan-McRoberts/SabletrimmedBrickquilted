@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using SabletrimmedBrickquilted.API.Extensions;
 
 namespace SabletrimmedBrickquilted
 {
@@ -9,12 +10,18 @@ namespace SabletrimmedBrickquilted
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
+
+            builder.Services.AddMemoryCache();
+
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
                 // The UI title/version label; not the OpenAPI version
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+
+            builder.Services.AddMongoDatabaseConfig(builder.Configuration);
 
             WebApplication app = builder.Build();
 
