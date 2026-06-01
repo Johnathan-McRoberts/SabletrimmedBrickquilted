@@ -26,7 +26,26 @@ namespace SabletrimmedBrickquilted.API.Extensions
             return services;
         }
 
-        public static void ConfigureApplicationServices(this WebApplicationBuilder builder)
+        public static void ConfigureCors(this WebApplicationBuilder builder)
+        {
+            string[] allowedOrigins = 
+                builder.Configuration
+                .GetSection("Cors:AllowedOrigins")
+                .Get<string[]>() ?? [];
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("ModuleFederation", policy =>
+                {
+                    policy.WithOrigins(allowedOrigins)
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+        }
+
+        public static void ConfigureApplicationServices(
+            this WebApplicationBuilder builder)
         {
             RegisterServicesFromAssemblies(builder);
 
