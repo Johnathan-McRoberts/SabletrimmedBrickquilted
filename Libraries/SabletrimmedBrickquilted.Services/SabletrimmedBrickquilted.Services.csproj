@@ -10,7 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Scrutor" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SabletrimmedBrickquilted.Domain\SabletrimmedBrickquilted.Domain.csproj" />
+    <ProjectReference Include="..\SabletrimmedBrickquilted.Dtos\SabletrimmedBrickquilted.Dtos.csproj" />
+    <ProjectReference Include="..\SabletrimmedBrickquilted.Repositories\SabletrimmedBrickquilted.Repositories.csproj" />
   </ItemGroup>
 
 </Project>
