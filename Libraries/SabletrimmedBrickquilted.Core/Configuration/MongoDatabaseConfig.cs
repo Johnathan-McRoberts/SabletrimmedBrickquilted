@@ -1,4 +1,4 @@
-﻿namespace SabletrimmedBrickquilted.Dtos.Configuration
+﻿namespace SabletrimmedBrickquilted.Core.Configuration
 {
     public class MongoDatabaseConfig
     {

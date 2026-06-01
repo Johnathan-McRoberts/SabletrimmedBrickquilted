@@ -22,6 +22,7 @@ namespace SabletrimmedBrickquilted
             });
 
             builder.Services.AddMongoDatabaseConfig(builder.Configuration);
+            builder.ConfigureApplicationServices();
 
             WebApplication app = builder.Build();
 

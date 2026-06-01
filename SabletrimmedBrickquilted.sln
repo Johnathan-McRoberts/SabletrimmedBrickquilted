@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36908.2 d17.14
+VisualStudioVersion = 17.14.36908.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SabletrimmedBrickquilted.Services", "Libraries\SabletrimmedBrickquilted.Services\SabletrimmedBrickquilted.Services.csproj", "{62A0E7EA-C42F-47A1-AA63-234709F15FF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SabletrimmedBrickquilted.API", "Libraries\SabletrimmedBrickquilted.API\SabletrimmedBrickquilted.API.csproj", "{A21C005F-0FE4-6613-9737-530C3DE0F48D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SabletrimmedBrickquilted.Core", "Libraries\SabletrimmedBrickquilted.Core\SabletrimmedBrickquilted.Core.csproj", "{9D56F978-C2A4-448E-A7D9-CB404CEFE23F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{A21C005F-0FE4-6613-9737-530C3DE0F48D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A21C005F-0FE4-6613-9737-530C3DE0F48D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A21C005F-0FE4-6613-9737-530C3DE0F48D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D56F978-C2A4-448E-A7D9-CB404CEFE23F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D56F978-C2A4-448E-A7D9-CB404CEFE23F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D56F978-C2A4-448E-A7D9-CB404CEFE23F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D56F978-C2A4-448E-A7D9-CB404CEFE23F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{B5E50B86-0A86-444A-9221-B2D080DBEDE1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{62A0E7EA-C42F-47A1-AA63-234709F15FF2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A21C005F-0FE4-6613-9737-530C3DE0F48D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{9D56F978-C2A4-448E-A7D9-CB404CEFE23F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {069D1037-AF47-4FD7-8405-7B72C7A697BD}
