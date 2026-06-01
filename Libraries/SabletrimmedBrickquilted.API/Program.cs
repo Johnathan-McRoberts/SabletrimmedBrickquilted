@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using SabletrimmedBrickquilted.API.Extensions;
 
 namespace SabletrimmedBrickquilted
 {
@@ -9,6 +10,10 @@ namespace SabletrimmedBrickquilted
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
+
+            builder.Services.AddMemoryCache();
+
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -16,12 +21,15 @@ namespace SabletrimmedBrickquilted
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
+            builder.Services.AddMongoDatabaseConfig(builder.Configuration);
+            builder.ConfigureApplicationServices();
+
             WebApplication app = builder.Build();
 
             app.UseSwagger(); // Generates /swagger/v1/swagger.json
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Books API V1");
             });
 
             app.MapControllers();
