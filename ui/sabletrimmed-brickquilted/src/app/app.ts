@@ -5,9 +5,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 
+import { SharedModule } from './shared/shared-module';
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatSlideToggle, MatButtonModule, MatDividerModule, MatIconModule],
+  imports:
+    [
+      RouterOutlet,
+      MatSlideToggle,
+      MatButtonModule,
+      MatDividerModule,
+      MatIconModule
+
+      , SharedModule
+    ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
