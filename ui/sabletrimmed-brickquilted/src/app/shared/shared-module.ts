@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MainToolbar } from './components/main-toolbar/main-toolbar';
-import { LoggedInService } from './services/logged-in-service';
 
 @NgModule({
   imports: [
@@ -20,6 +19,6 @@ import { LoggedInService } from './services/logged-in-service';
     [
       MainToolbar
     ],
-  providers: [LoggedInService]
+  providers: []
 })
 export class SharedModule {}

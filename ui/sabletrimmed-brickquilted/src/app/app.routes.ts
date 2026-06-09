@@ -9,6 +9,7 @@ import { SharedModule } from './shared/shared-module';
 
 
 import { Login } from './user-login/components/login/login';
+import { TablesOverview } from './tables/components/tables-overview/tables-overview';
 
 import { loggedInGuard } from './logged-in-guard';
 
@@ -24,5 +25,12 @@ export const routes: Routes = [
     title: 'Login',
     pathMatch: 'full',
     component: Login,
+  },
+  {
+    path: 'tables',
+    title: 'Tables',
+    pathMatch: 'full',
+    component: TablesOverview,
+    canActivate: [loggedInGuard]
   },
 ];
