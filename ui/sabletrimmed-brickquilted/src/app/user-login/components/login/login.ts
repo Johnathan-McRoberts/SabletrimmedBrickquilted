@@ -1,33 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-
-
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-//import { Injectable } from '@angular/core';
-//import { Observable } from 'rxjs';
-
-import {
-  MatSnackBar,
-  MatSnackBarAction,
-  MatSnackBarActions,
-  MatSnackBarLabel,
-  MatSnackBarRef,
-} from '@angular/material/snack-bar';
-//import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UserLoginResponseCode } from '../../../shared/models/user-login-response-code';
-
 import { LoggedInService } from './../../../shared/services/logged-in-service';
-
-
-interface Course {
-  description: string;
-  courseListIcon: string;
-  iconUrl: string;
-  longDescription: string;
-  url: string;
-}
 
 @Component({
   standalone: false,  // this is now required when using NgModule
@@ -37,8 +13,8 @@ interface Course {
 })
 export class Login {
 
+  public hidePassword: boolean = true;
 
-  private _http = inject(HttpClient);
   private _loggedInService = inject(LoggedInService);
   private _snackBar = inject(MatSnackBar);
   private router = inject(Router);
@@ -88,29 +64,6 @@ export class Login {
             }
           }
         });
-  }
-
-
-  users: any[] = [];
-  loading = false;
-  error = '';
-
-  submitHello() {
-
-    console.log("submit login for : u = " + this.userNameValue() + " p = " + this.passwordValue());
-
-    this.loading = true;
-    this.error = '';
-
-    this._http.get<any[]>('https://jsonplaceholder.typicode.com/users')
-      .subscribe({
-        next: (data: any) => {
-          console.log('Received data:', JSON.stringify(data));
-          this.users = data;
-          this.loading = false;
-        },
-        error: () => { this.error = 'Failed to load users'; this.loading = false; }
-      });
   }
 }
 

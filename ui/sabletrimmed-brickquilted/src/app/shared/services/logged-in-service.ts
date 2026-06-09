@@ -1,10 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { UserLoginRequest } from '../models/user-login-request';
 import { UserLoginResponse } from '../models/user-login-response';
-//import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -52,19 +51,5 @@ export class LoggedInService {
 
     // return the observable
     return this.http.get<UserLoginResponse>(prefix +url + queryParams);
-  }
-
-
-
-  getWeatherForecast(): Observable<Object> {
-
-    //set up the url
-    const prefix: string = 'http://localhost:5122';
-    const url: string = '/WeatherForecast';
-
-    return this.http.get(prefix + url, { responseType: 'json' });
-
-    // return the observable
-    //return this.http.get<string>(prefix + url);
   }
 }

@@ -3,20 +3,26 @@
   <mat-form-field>
     <mat-label>Enter your user name</mat-label>
     <input matInput #input maxlength="20"
-           placeholder="Duke Vineland"
+           placeholder="Jimmy Vineland"
            (input)="onInputUserName($event)" />
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Enter your password</mat-label>
-    <input matInput type="password"
-           (input)="onInputPassword($event)">
-    <mat-icon>visibility_off</mat-icon>
+    <input matInput placeholder="Password"
+           [type]="hidePassword ? 'password' : 'text'"
+           (input)="onInputPassword($event)"
+           required>
+    <mat-icon matSuffix (click)="hidePassword = !hidePassword">
+      {{hidePassword ? 'visibility_off' : 'visibility'}}
+    </mat-icon>
+    <mat-hint>Enter your password</mat-hint>
   </mat-form-field>
 </form>
 
 <div class="submit-button">
 
-  <button (click)="submitLogin()" mat-raised-button color="primary">
+  <button (click)="submitLogin()"
+          matButton="filled"
+          >
     <mat-icon>login</mat-icon>
     <span>&nbsp; Login</span>
   </button>

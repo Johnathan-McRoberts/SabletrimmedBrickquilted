@@ -1,9 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-
 import { LoggedInService } from './../../../shared/services/logged-in-service';
-
 
 @Component({
   selector: 'app-main-toolbar',

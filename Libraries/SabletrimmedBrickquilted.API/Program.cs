@@ -32,9 +32,6 @@ namespace SabletrimmedBrickquilted
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Books API V1");
             });
 
-
-
-
             //Configure Cors
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
@@ -42,7 +39,6 @@ namespace SabletrimmedBrickquilted
                 .AllowAnyMethod());
 
             app.UseAuthentication();
-
 
             app.MapControllers();
             app.Run();
