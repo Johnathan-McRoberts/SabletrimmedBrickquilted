@@ -13,7 +13,6 @@ namespace SabletrimmedBrickquilted
 
             builder.Services.AddMemoryCache();
 
-
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -23,6 +22,7 @@ namespace SabletrimmedBrickquilted
 
             builder.Services.AddMongoDatabaseConfig(builder.Configuration);
             builder.ConfigureApplicationServices();
+            builder.ConfigureCors();
 
             WebApplication app = builder.Build();
 
@@ -31,6 +31,18 @@ namespace SabletrimmedBrickquilted
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Books API V1");
             });
+
+
+
+
+            //Configure Cors
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+
+            app.UseAuthentication();
+
 
             app.MapControllers();
             app.Run();

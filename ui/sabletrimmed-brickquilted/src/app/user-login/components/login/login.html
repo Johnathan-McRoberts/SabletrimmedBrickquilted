@@ -1,0 +1,23 @@
+<form class="login-form">
+  <h1>LOG IN</h1>
+  <mat-form-field>
+    <mat-label>Enter your user name</mat-label>
+    <input matInput #input maxlength="20"
+           placeholder="Duke Vineland"
+           (input)="onInputUserName($event)" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Enter your password</mat-label>
+    <input matInput type="password"
+           (input)="onInputPassword($event)">
+    <mat-icon>visibility_off</mat-icon>
+  </mat-form-field>
+</form>
+
+<div class="submit-button">
+
+  <button (click)="submitLogin()" mat-raised-button color="primary">
+    <mat-icon>login</mat-icon>
+    <span>&nbsp; Login</span>
+  </button>
+</div>

@@ -75,7 +75,10 @@
               "buildTarget": "sabletrimmed-brickquilted:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4949
+          }
         },
         "test": {
           "builder": "@angular/build:unit-test"

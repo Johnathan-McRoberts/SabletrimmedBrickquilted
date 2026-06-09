@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 
-
-
 import { ChartsModule } from './charts/charts-module';
 import { DataFormsModule } from './forms/data-forms-module';
 import { ImportExportModule } from './import-export/import-export-module';
@@ -10,6 +8,21 @@ import { UserLoginModule } from './user-login/user-login-module';
 import { SharedModule } from './shared/shared-module';
 
 
+import { Login } from './user-login/components/login/login';
+
 import { loggedInGuard } from './logged-in-guard';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: '',
+    title: 'Login',
+    pathMatch: 'full',
+    component: Login,
+  },
+  {
+    path: 'login',
+    title: 'Login',
+    pathMatch: 'full',
+    component: Login,
+  },
+];

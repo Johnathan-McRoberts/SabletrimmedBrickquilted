@@ -44,12 +44,27 @@ export class LoggedInService {
     }
 
     //set up the url
+    const prefix: string = 'http://localhost:5122';
     const url: string = '/api/UserLogin/log-in';
 
     // and the query parameters
     const queryParams: string = '?Name=' + userName + '&Password=' + userPassword;
 
     // return the observable
-    return this.http.get<UserLoginResponse>(url + queryParams);
+    return this.http.get<UserLoginResponse>(prefix +url + queryParams);
+  }
+
+
+
+  getWeatherForecast(): Observable<Object> {
+
+    //set up the url
+    const prefix: string = 'http://localhost:5122';
+    const url: string = '/WeatherForecast';
+
+    return this.http.get(prefix + url, { responseType: 'json' });
+
+    // return the observable
+    //return this.http.get<string>(prefix + url);
   }
 }

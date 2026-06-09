@@ -1,0 +1,25 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+  text-align: center;
+  max-width: 450px;
+}
+
+.submit-button {
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+  text-align: center;
+  max-width: 450px;
+}
+
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+

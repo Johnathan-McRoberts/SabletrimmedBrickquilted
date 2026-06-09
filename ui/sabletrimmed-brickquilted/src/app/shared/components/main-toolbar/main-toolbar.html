@@ -1,1 +1,38 @@
 <p>main-toolbar works!</p>
+<mat-toolbar color="primary">
+
+  <button (click)="navigateToLogin()" mat-raised-button color="primary">
+    <mat-icon>login</mat-icon>
+    <span>&nbsp; Login</span>
+  </button>
+
+  <span>&nbsp; Books {{displayuser}}</span>
+  <span class="example-spacer"></span>
+
+  <button (click)="navigateToTables()" mat-raised-button color="primary" [disabled]="isNotLoggedIn()">
+    <mat-icon>view_list</mat-icon>
+    <span>&nbsp; Tables</span>
+  </button>
+
+  <button (click)="navigateToForms()" mat-raised-button color="primary" [disabled]="isNotLoggedIn()">
+    <mat-icon>edit</mat-icon>
+    <span>&nbsp; Forms</span>
+  </button>
+
+  <button (click)="navigateToCharts()" mat-raised-button color="primary" [disabled]="isNotLoggedIn()">
+    <mat-icon>analytics</mat-icon>
+    <span>&nbsp; Charts</span>
+  </button>
+
+  <button (click)="navigateToInputExport()" mat-raised-button color="primary" [disabled]="isNotLoggedIn()">
+    <mat-icon>download</mat-icon>
+    <span>&nbsp; Import/Export</span>
+  </button>
+
+  <button (click)="navigateToUsers()" mat-raised-button color="primary" [disabled]="isNotLoggedIn()">
+    <mat-icon>account_circle</mat-icon>
+    <span>&nbsp; Users</span>
+  </button>
+
+</mat-toolbar>
+

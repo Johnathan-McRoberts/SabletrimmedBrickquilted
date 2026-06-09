@@ -4,6 +4,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from './shared/shared-module';
 
@@ -11,6 +12,9 @@ import { SharedModule } from './shared/shared-module';
   selector: 'app-root',
   imports:
     [
+
+      HttpClientModule,
+
       RouterOutlet,
       MatSlideToggle,
       MatButtonModule,
