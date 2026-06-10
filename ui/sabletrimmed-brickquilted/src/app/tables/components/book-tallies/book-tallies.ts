@@ -1,23 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Router } from '@angular/router';
-
 import {
   MatSnackBar,
 } from '@angular/material/snack-bar';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
-import { LoggedInService } from './../../../shared/services/logged-in-service';
 import { SharedModule } from './../../../shared/shared-module';
 import { BookTablesService } from './../../../tables/services/book-tables-service';
 import { ITalliedBook } from '../../../shared/models/books/itallied-book';
@@ -26,10 +16,7 @@ import { ITalliedBook } from '../../../shared/models/books/itallied-book';
   imports:
     [
       CommonModule,
-      MatSnackBarModule,
       MatTableModule,
-      MatSortModule,
-      MatInputModule,
       MatProgressSpinnerModule,
 
       SharedModule

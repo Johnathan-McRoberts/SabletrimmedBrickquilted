@@ -14,7 +14,7 @@ import { ITalliedBook } from '../../shared/models/books/itallied-book';
 })
 export class BookTablesService {
 
-  readonly baseUrl: string = environment.baseUrl;
+  private baseUrl: string = environment.baseUrl;
   private http = inject(HttpClient);
 
   constructor() { }

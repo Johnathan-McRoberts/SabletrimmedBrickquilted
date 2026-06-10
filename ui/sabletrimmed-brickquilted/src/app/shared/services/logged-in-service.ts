@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment';
 export class LoggedInService {
 
   private http = inject(HttpClient);
+  private baseUrl: string = environment.baseUrl;
 
   private currentUser: UserLoginResponse | null = null;
 
@@ -45,13 +46,12 @@ export class LoggedInService {
     }
 
     //set up the url
-    const prefix: string = environment.baseUrl;
     const url: string = '/api/UserLogin/log-in';
 
     // and the query parameters
     const queryParams: string = '?Name=' + userName + '&Password=' + userPassword;
 
     // return the observable
-    return this.http.get<UserLoginResponse>(prefix + url + queryParams);
+    return this.http.get<UserLoginResponse>(this.baseUrl + url + queryParams);
   }
 }
