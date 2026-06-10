@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { UserLoginRequest } from '../models/user-login-request';
 import { UserLoginResponse } from '../models/user-login-response';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,13 +45,13 @@ export class LoggedInService {
     }
 
     //set up the url
-    const prefix: string = 'http://localhost:5122';
+    const prefix: string = environment.baseUrl;
     const url: string = '/api/UserLogin/log-in';
 
     // and the query parameters
     const queryParams: string = '?Name=' + userName + '&Password=' + userPassword;
 
     // return the observable
-    return this.http.get<UserLoginResponse>(prefix +url + queryParams);
+    return this.http.get<UserLoginResponse>(prefix + url + queryParams);
   }
 }

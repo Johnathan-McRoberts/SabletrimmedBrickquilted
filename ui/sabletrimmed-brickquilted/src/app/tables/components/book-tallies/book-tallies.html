@@ -1,1 +1,68 @@
-<p>book-tallies works!</p>
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<div *ngIf="hasData">
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+    The actual rendered columns are set as a property on the row definition" -->
+    <!-- Date Column -->
+    <ng-container matColumnDef="dateString">
+      <th mat-header-cell *matHeaderCellDef> Date Read </th>
+      <td mat-cell *matCellDef="let element"> {{element.dateString}} </td>
+    </ng-container>
+
+    <!-- Author Column -->
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef> Author </th>
+      <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Pages Column -->
+    <ng-container matColumnDef="pages">
+      <th mat-header-cell *matHeaderCellDef> Pages </th>
+      <td mat-cell *matCellDef="let element"> {{element.pages}} </td>
+    </ng-container>
+
+    <!-- Total Read Column -->
+    <ng-container matColumnDef="totalBooks">
+      <th mat-header-cell *matHeaderCellDef> Total Read </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalBooks}} </td>
+    </ng-container>
+
+    <!-- Number Books Column -->
+    <ng-container matColumnDef="totalBookFormat">
+      <th mat-header-cell *matHeaderCellDef> # Books </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalBookFormat}} </td>
+    </ng-container>
+
+    <!-- Number Comics Column -->
+    <ng-container matColumnDef="totalComicFormat">
+      <th mat-header-cell *matHeaderCellDef> # Comics </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalComicFormat}} </td>
+    </ng-container>
+
+    <!-- Number Audio Column -->
+    <ng-container matColumnDef="totalAudioFormat">
+      <th mat-header-cell *matHeaderCellDef> # Audio </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalAudioFormat}} </td>
+    </ng-container>
+
+    <!-- Total Pages Column -->
+    <ng-container matColumnDef="totalPagesRead">
+      <th mat-header-cell *matHeaderCellDef> Total Pages </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalPagesRead}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+</div>
