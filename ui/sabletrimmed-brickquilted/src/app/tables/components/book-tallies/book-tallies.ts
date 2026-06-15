@@ -1,12 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {
-  MatSnackBar,
-} from '@angular/material/snack-bar';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
+
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { SharedModule } from './../../../shared/shared-module';
 import { BookTablesService } from './../../../tables/services/book-tables-service';
@@ -47,12 +49,21 @@ export class BookTallies implements OnInit {
 
   public get loading(): boolean { return this._tallies === undefined; }
   public get hasData(): boolean { return !this.loading; }
-  public get dataSource(): any { return !this.loading ? this._tallies : []; }
+  //public get dataSource(): any { return !this.loading ? this._tallies : []; }
   public get displayedColumns(): string[] { return this.columns; }
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
+
+  constructor() {
+
+    this._tallies = [];
+
+    this.dataSource = new MatTableDataSource(this._tallies);
+  }
+
+  dataSource: MatTableDataSource<ITalliedBook>;
 
   ngOnInit() {
     this.getTallies();
@@ -68,6 +79,7 @@ export class BookTallies implements OnInit {
 
             // got the data ok 
             this._tallies = resp;
+            this.dataSource = new MatTableDataSource(this._tallies);
           }
           else {
 

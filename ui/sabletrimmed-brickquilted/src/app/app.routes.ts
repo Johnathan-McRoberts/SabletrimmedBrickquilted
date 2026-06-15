@@ -11,6 +11,8 @@ import { SharedModule } from './shared/shared-module';
 import { Login } from './user-login/components/login/login';
 import { TablesOverview } from './tables/components/tables-overview/tables-overview';
 import { ChartsOverview } from './charts/components/charts-overview/charts-overview';
+
+import { FormsOverview } from './forms/components/forms-overview/forms-overview';
 import { ImportExportOverview } from './import-export/components/import-export-overview/import-export-overview';
 import { UserToolbar } from './toolbar/components/user-toolbar/user-toolbar';
 
@@ -48,6 +50,13 @@ export const routes: Routes = [
     title: 'Import/Export',
     pathMatch: 'full',
     component: ImportExportOverview,
+    canActivate: [loggedInGuard]
+  },
+  {
+    path: 'forms',
+    title: 'Forms',
+    pathMatch: 'full',
+    component: FormsOverview,
     canActivate: [loggedInGuard]
   },
 ];
