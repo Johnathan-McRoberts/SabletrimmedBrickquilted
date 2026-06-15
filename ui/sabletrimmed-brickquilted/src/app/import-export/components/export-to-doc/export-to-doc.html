@@ -1,6 +1,12 @@
-<p>export-to-doc works!</p>
+<p>export-to-doc works! 4</p>
 
-<mat-radio-group aria-label="Select an option">
-  <mat-radio-button value="1">Option 1</mat-radio-button>
-  <mat-radio-button value="2">Option 2</mat-radio-button>
-</mat-radio-group>
+
+<mat-form-field>
+  <mat-label>Document Type</mat-label>
+  <mat-select [(ngModel)]="selectedDocType" (ngModelChange)="onDocSelection()">
+    @for (docType of documentTypes; track docType) {
+    <mat-option [value]="docType.name">{{docType.name}} ( {{docType.description}} )</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
