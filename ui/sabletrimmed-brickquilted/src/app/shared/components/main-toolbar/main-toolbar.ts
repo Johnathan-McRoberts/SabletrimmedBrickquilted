@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { LoggedInService } from './../../../shared/services/logged-in-service';
@@ -9,17 +9,30 @@ import { LoggedInService } from './../../../shared/services/logged-in-service';
   styleUrls: ['./main-toolbar.scss'],
   standalone: false
 })
-export class MainToolbar {
+export class MainToolbar implements OnInit {
 
   private router = inject(Router);
   private loggedInService = inject(LoggedInService);
 
-  public isNotLoggedIn(): boolean {
-    return !this.loggedInService.isLoggedIn;
+  public get isNotLoggedIn(): boolean {
+    return false;
+    //return this.loggedInService.isNotLoggedIn;
+  }
+  public get isLoggedIn(): boolean {
+    return this.loggedInService.isLoggedIn;
   }
 
   public get displayuser(): string {
     return this.loggedInService.isLoggedIn ? ': ' + this.loggedInService.loggedInUserName : '';
+
+  }
+
+  public user: string = '';
+  ngOnInit() {
+    this.loggedInService.castUser.subscribe(user => {
+      console.log('MainToolbar: user name changed to', user);
+      this.user = user;
+    });
 
   }
 

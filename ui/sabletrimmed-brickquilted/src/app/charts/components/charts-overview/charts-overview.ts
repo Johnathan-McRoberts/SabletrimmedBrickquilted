@@ -1,17 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { LoggedInService } from './../../../shared/services/logged-in-service';
 
-import { BookTallies } from './../book-tallies/book-tallies';
-import { Authors } from './../authors/authors';
-import { ReadBooks } from './../read-books/read-books';
 
 @Component({
   standalone: false,  // this is now required when using NgModule
-  selector: 'app-tables-overview',
-  templateUrl: './tables-overview.html',
-  styleUrl: './tables-overview.scss',
+  selector: 'app-charts-overview',
+  templateUrl: './charts-overview.html',
+  styleUrl: './charts-overview.scss',
 })
-export class TablesOverview implements OnInit {
+export class ChartsOverview implements OnInit {
 
   //private router = inject(Router);
 
@@ -28,7 +25,7 @@ export class TablesOverview implements OnInit {
 
   ngOnInit() {
     this.loggedInService.castUser.subscribe(data => {
-      console.log('TablesOverview: user name changed to', data);
+      console.log('ChartsOverview: user name changed to', data);
       this.user = data;
     });
 

@@ -4,12 +4,13 @@
     <mat-label>Enter your user name</mat-label>
     <input matInput #input maxlength="20"
            placeholder="Jimmy Vineland"
-           (input)="onInputUserName($event)" />
+           (input)="onInputUserName($event)"/>
   </mat-form-field>
   <mat-form-field>
     <input matInput placeholder="Password"
            [type]="hidePassword ? 'password' : 'text'"
            (input)="onInputPassword($event)"
+           (keyup.enter)="onPasswordEnter($event)"
            required>
     <mat-icon matSuffix (click)="hidePassword = !hidePassword">
       {{hidePassword ? 'visibility_off' : 'visibility'}}

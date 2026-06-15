@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 import { UserLoginRequest } from '../models/user-login-request';
 import { UserLoginResponse } from '../models/user-login-response';
@@ -20,6 +20,9 @@ export class LoggedInService {
   public get isLoggedIn(): boolean {
     return this.currentUser !== null;
   }
+  public get isNotLoggedIn(): boolean {
+    return this.currentUser === null;
+  }
 
   public get loggedInUserName(): string {
     return (this.currentUser !== null) ? this.currentUser.name : '';
@@ -31,6 +34,18 @@ export class LoggedInService {
 
   public setLoggedInUser(user: UserLoginResponse): void {
     this.currentUser = user;
+
+    console.log('LoggedInService: setLoggedInUser called with user:', user.name);
+    this.editUser(user.name);
+    console.log('LoggedInService: user name updated to', user.name);
+    console.log('LoggedInService: isNotLoggedIn() = ', this.isNotLoggedIn);
+  }
+
+  private userName = new BehaviorSubject<string>('Undefined');
+  castUser = this.userName.asObservable();
+
+  editUser(newUserName: string) {
+    this.userName.next(newUserName);
   }
 
   constructor() { }

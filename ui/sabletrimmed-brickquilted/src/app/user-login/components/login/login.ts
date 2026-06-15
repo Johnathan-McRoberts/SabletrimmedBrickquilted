@@ -36,6 +36,11 @@ export class Login {
     console.log("hey I got the password as " + this.passwordValue());
   }
 
+  protected onPasswordEnter(event: Event) {
+    console.log("The password is " + this.passwordValue() + " and I've to hit enter");
+    this.submitLogin();
+  }
+
 
   submitLogin() {
 

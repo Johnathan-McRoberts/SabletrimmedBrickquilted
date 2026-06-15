@@ -63,7 +63,7 @@ export class BookTallies implements OnInit {
       .getBookTallies()
       .subscribe(
         resp => {
-          console.log('Rxed resp:', JSON.stringify(resp));
+          console.log('Rxed resp:', JSON.stringify(resp).substring(0,100) );
           if (resp !== null && resp !== undefined && resp.length > 0) {
 
             // got the data ok 
