@@ -20,14 +20,15 @@ import { MatRadioModule } from '@angular/material/radio';
 import { SharedModule } from './../shared/shared-module';
 
 import { ImportExportOverview } from './components/import-export-overview/import-export-overview';
-import { Export } from './components/export/export';
+import { ExportToDoc } from './components/export-to-doc/export-to-doc';
 
 import { DownloadService } from './services/download-service';
 import { ExportService } from './services/export-service';
 
 @NgModule({
-  declarations: [ImportExportOverview, Export],
+  declarations: [ImportExportOverview],
   imports: [
+
     CommonModule,
     FormsModule,
     MatButtonModule,
@@ -43,8 +44,12 @@ import { ExportService } from './services/export-service';
     MatTableModule,
     MatSnackBarModule,
     MatTabsModule,
-    SharedModule],
-  exports: [ImportExportOverview, Export],
+    SharedModule,
+
+
+    ExportToDoc,
+  ],
+  exports: [ImportExportOverview],
   providers: [DownloadService, ExportService],
 })
 export class ImportExportModule {}

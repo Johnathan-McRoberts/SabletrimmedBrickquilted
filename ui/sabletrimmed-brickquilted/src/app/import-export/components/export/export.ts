@@ -3,6 +3,8 @@ import { Component, inject, OnInit, AfterViewInit, ChangeDetectorRef } from '@an
 import {
   MatSnackBar,
 } from '@angular/material/snack-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ExportOptionsResponseDto, IDocumentType, IExportOption } from '../../models/export-options-response-dto';
 import { DownloadService } from '../../services/download-service';
@@ -16,9 +18,11 @@ interface Food {
 }
 
 @Component({
-  standalone: false,  // this is now required when using NgModule
   selector: 'app-export',
-  //imports: [],
+  imports: [
+    MatRadioModule,
+    MatSnackBarModule,
+  ],
   templateUrl: './export.html',
   styleUrl: './export.scss',
 })
@@ -94,9 +98,9 @@ export class Export implements AfterViewInit {
 
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.getExportOptions();
-    });
+    //setTimeout(() => {
+    //  this.getExportOptions();
+    //});
   }
 
   getExportOptions() {
@@ -150,23 +154,23 @@ export class Export implements AfterViewInit {
   //}
 
   getOptions() {
-    this._exportService
-      .getExportOptions()
-      .subscribe(
-        resp => {
-          console.log('Rxed resp:', JSON.stringify(resp));
-          if (resp !== null && resp !== undefined && resp.documentTypes.length > 0) {
+    //this._exportService
+    //  .getExportOptions()
+    //  .subscribe(
+    //    resp => {
+    //      console.log('Rxed resp:', JSON.stringify(resp));
+    //      if (resp !== null && resp !== undefined && resp.documentTypes.length > 0) {
 
-            // got the data ok 
-            this._options = resp;
-            this.setupDocumentTypes();
-          }
-          else {
+    //        // got the data ok 
+    //        this._options = resp;
+    //        this.setupDocumentTypes();
+    //      }
+    //      else {
 
-            // an error occured
-            this.openSnackBar('Get Export options failed: ', 'OK');
-          }
-        });
+    //        // an error occured
+    //        this.openSnackBar('Get Export options failed: ', 'OK');
+    //      }
+    //    });
     this._changeDetectorRef.detectChanges();
   }
 

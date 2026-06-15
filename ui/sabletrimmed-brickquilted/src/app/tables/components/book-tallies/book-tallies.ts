@@ -6,8 +6,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { SharedModule } from './../../../shared/shared-module';
@@ -49,7 +47,6 @@ export class BookTallies implements OnInit {
 
   public get loading(): boolean { return this._tallies === undefined; }
   public get hasData(): boolean { return !this.loading; }
-  //public get dataSource(): any { return !this.loading ? this._tallies : []; }
   public get displayedColumns(): string[] { return this.columns; }
 
   openSnackBar(message: string, action: string) {
