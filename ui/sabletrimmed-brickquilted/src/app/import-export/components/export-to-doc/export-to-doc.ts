@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef, signal } from '@angular/core';
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -65,9 +65,14 @@ export class ExportToDoc implements OnInit {
     return this._documentTypes || [];
   }
 
+  public get exportOptions(): IExportOption[] {
+    return this._exportOptions || [];
+  }
+
   public get loading(): boolean {
     return this._documentTypes === undefined || this._exportOptions === undefined;
   }
+
   public get hasData(): boolean {
     return !this.loading;
   }
@@ -105,9 +110,37 @@ export class ExportToDoc implements OnInit {
         });
   }
 
+  // selected export option
+
+  selectedExportOpt: string = '';
+  public onExportSelection() {
+    console.log("now selected : ", this.selectedExportOpt);
+    this._selectedExportOption = this.selectedExportOpt;
+
+    let isDisabledVal = !this.hasExportOption || !this.hasDocumentTypeSelection;
+    this.isDisabled.set(isDisabledVal);
+    console.log("isDisabled: ", isDisabledVal);
+
+  }
+
+  public get hasExportOption(): boolean {
+    return this._exportOptions !== undefined && this._exportOptions.length > 0 &&
+      this._selectedExportOption !== undefined && this.selectedExportOpt !== '';
+  }
+
+  private _selectedExportOption: string | undefined = undefined;
+
+
+  // selected document type
+
   selectedDocType: string = '';
   public onDocSelection() {
     console.log("now selected : ", this.selectedDocType);
+    this._selectedDocumentType = this.selectedDocType;
+
+    let isDisabledVal = !this.hasExportOption || !this.hasDocumentTypeSelection;
+    this.isDisabled.set(isDisabledVal);
+    console.log("isDisabled: ", isDisabledVal);
   }
 
   public get hasDocumentTypeSelection(): boolean {
@@ -128,4 +161,32 @@ export class ExportToDoc implements OnInit {
     //this.setupDocumentTypeDescription();
     //this.setupExportOptions();
   }
+
+  //  butons
+
+  isDisabled = signal<boolean>(true);
+
+  public get noOptionsSelection(): boolean {
+    return !this.hasDocumentTypeSelection || !this.hasDocumentTypeSelection;
+  } 
+
+  //openSnackBar(message: string, action: string) {
+  //  this._snackBar.open(message, action);
+  //}
+
+  exportData() {
+    if (this.hasDocumentTypeSelection && this.hasExportOption) {
+
+      console.log("Getting report of type: " + this._selectedDocumentType +
+        " with export option: " + this._selectedExportOption +
+        " for user: " + this._loggedInService.loggedInUserName);
+
+      //this._downloadService.downloadDocument(
+      //  this._loggedInService.loggedInUserName,
+      //  this._selectedDocumentType,
+      //  this._selectedExportOptionName
+      //);
+    }
+  }
 }
+
