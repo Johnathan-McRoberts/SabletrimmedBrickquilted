@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject,  AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';

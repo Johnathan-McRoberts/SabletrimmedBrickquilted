@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -18,6 +18,10 @@ import { ITalliedBook } from '../../../shared/models/books/itallied-book';
   styleUrl: './book-tallies.scss',
 })
 export class BookTallies implements OnInit {
+
+  readonly $loadingTallies = signal(true);
+  readonly $hasTallyData = signal(false);
+
   private _bookTablesService = inject(BookTablesService);
 
   private _snackBar = inject(MatSnackBar);
@@ -59,6 +63,7 @@ export class BookTallies implements OnInit {
   dataSource: MatTableDataSource<ITalliedBook>;
 
   ngOnInit() {
+    this.$loadingTallies.set(true);
     this.getTallies();
   }
 
@@ -69,6 +74,8 @@ export class BookTallies implements OnInit {
         // got the data ok
         this._tallies = resp;
         this.dataSource = new MatTableDataSource(this._tallies);
+        this.$hasTallyData.set(true);
+        this.$loadingTallies.set(false);
       } else {
         // an error occured
         this.openSnackBar('Get Book tallies failed: ', 'OK');
