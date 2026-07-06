@@ -1,6 +1,5 @@
 export class NewBook {
   constructor(
-
     public date: Date,
     public author: string,
     public title: string,
@@ -15,5 +14,5 @@ export class NewBook {
     public tags: string[],
 
     public userId: string,
-  ) { }
+  ) {}
 }

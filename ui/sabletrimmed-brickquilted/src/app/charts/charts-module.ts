@@ -10,22 +10,8 @@ import { SharedModule } from './../shared/shared-module';
 import { ChartsOverview } from './components/charts-overview/charts-overview';
 
 @NgModule({
-  declarations:
-    [
-      ChartsOverview
-    ],
-  imports:
-    [
-      CommonModule,
-
-      MatButtonModule,
-      MatIconModule,
-      MatTabsModule,
-      SharedModule
-    ],
-  exports:
-    [
-      ChartsOverview
-    ],
+  declarations: [ChartsOverview],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatTabsModule, SharedModule],
+  exports: [ChartsOverview],
 })
 export class ChartsModule {}

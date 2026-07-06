@@ -2,28 +2,32 @@
   <h1>LOG IN</h1>
   <mat-form-field>
     <mat-label>Enter your user name</mat-label>
-    <input matInput #input maxlength="20"
-           placeholder="Jimmy Vineland"
-           (input)="onInputUserName($event)"/>
+    <input
+      matInput
+      #input
+      maxlength="20"
+      placeholder="Jimmy Vineland"
+      (input)="onInputUserName($event)"
+    />
   </mat-form-field>
   <mat-form-field>
-    <input matInput placeholder="Password"
-           [type]="hidePassword ? 'password' : 'text'"
-           (input)="onInputPassword($event)"
-           (keyup.enter)="onPasswordEnter($event)"
-           required>
+    <input
+      matInput
+      placeholder="Password"
+      [type]="hidePassword ? 'password' : 'text'"
+      (input)="onInputPassword($event)"
+      (keyup.enter)="onPasswordEnter($event)"
+      required
+    />
     <mat-icon matSuffix (click)="hidePassword = !hidePassword">
-      {{hidePassword ? 'visibility_off' : 'visibility'}}
+      {{ hidePassword ? 'visibility_off' : 'visibility' }}
     </mat-icon>
     <mat-hint>Enter your password</mat-hint>
   </mat-form-field>
 </form>
 
 <div class="submit-button">
-
-  <button (click)="submitLogin()"
-          matButton="filled"
-          >
+  <button (click)="submitLogin()" matButton="filled">
     <mat-icon>login</mat-icon>
     <span>&nbsp; Login</span>
   </button>

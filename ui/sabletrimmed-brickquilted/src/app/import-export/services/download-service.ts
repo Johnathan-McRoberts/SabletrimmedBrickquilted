@@ -1,19 +1,8 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {
-  filter,
-  first,
-  map,
-  merge,
-  Observable,
-  switchMap,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { filter, first, map, merge, Observable, switchMap, takeUntil, tap } from 'rxjs';
 
-import {
-  MatSnackBar,
-} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ExportService } from './export-service';
 
@@ -21,56 +10,39 @@ import { ExportService } from './export-service';
   providedIn: 'root',
 })
 export class DownloadService {
-
   private _exportService = inject(ExportService);
   private _snackBar = inject(MatSnackBar);
 
-  constructor() { }
+  constructor() {}
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 3000 });
   }
 
-  public downloadDocument(
-    user: string,
-    documentType: string,
-    exportOption: string
-  ) {
+  public downloadDocument(user: string, documentType: string, exportOption: string) {
     console.log('saying ....Your download will begin shortly...');
 
     this.openSnackBar('Your download will begin shortly...', 'OK');
 
+    this._exportService.getExport(user, documentType, exportOption).subscribe((resp) => {
+      console.log('Rxed resp:', resp.filename);
+      this.saveResponse(resp);
+      this.openSnackBar('Your report has been successfully downloaded', 'OK');
 
-    this._exportService
-      .getExport(
-        user,
-        documentType,
-        exportOption
-      )
-      .subscribe(
-        resp => {
+      //if (resp !== null && resp !== undefined && resp.length > 0) {
 
-          console.log('Rxed resp:', resp.filename);
-          this.saveResponse(resp);
-          this.openSnackBar('Your report has been successfully downloaded', 'OK');
+      //  // got the data ok
+      //  this._books = resp;
+      //  this.dataSource = new MatTableDataSource(this._books);
+      //  this.dataSource.paginator = this.paginator;
+      //  this.dataSource.sort = this.sort;
+      //}
+      //else {
 
-
-          //if (resp !== null && resp !== undefined && resp.length > 0) {
-
-          //  // got the data ok 
-          //  this._books = resp;
-          //  this.dataSource = new MatTableDataSource(this._books);
-          //  this.dataSource.paginator = this.paginator;
-          //  this.dataSource.sort = this.sort;
-          //}
-          //else {
-
-          //  // an error occured
-          //  this.openSnackBar('Get Books read failed: ', 'OK');
-          //}
-
-        });
-
+      //  // an error occured
+      //  this.openSnackBar('Get Books read failed: ', 'OK');
+      //}
+    });
 
     //this.reports$
     //  .pipe(
@@ -144,27 +116,18 @@ export class DownloadService {
     //  });
   }
 
-
-
   getDocumentFile(
     userId: string,
     documentType: string,
-    exportOption: string
+    exportOption: string,
   ): Observable<{
     filename: string;
     response: HttpResponse<Blob>;
   }> | null {
-
-    return this._exportService.getExport(
-      userId,
-      documentType,
-      exportOption);
+    return this._exportService.getExport(userId, documentType, exportOption);
   }
 
-  saveResponse(fileResponse: {
-    response: HttpResponse<Blob>;
-    filename: string;
-  }) {
+  saveResponse(fileResponse: { response: HttpResponse<Blob>; filename: string }) {
     // check the data came back OK
     if (fileResponse.response.body) {
       // create the file content blob
@@ -181,7 +144,6 @@ export class DownloadService {
     }
   }
 
-
   public downloadURL(data: any, fileName: string) {
     const element = document.createElement('a');
     element.href = data;
@@ -192,4 +154,3 @@ export class DownloadService {
     element.remove();
   }
 }
-

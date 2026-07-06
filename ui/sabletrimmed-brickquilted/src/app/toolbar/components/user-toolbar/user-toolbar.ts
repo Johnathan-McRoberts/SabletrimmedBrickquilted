@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -9,13 +8,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoggedInService } from './../../../shared/services/logged-in-service';
 
 @Component({
-  standalone: false,  // this is now required when using NgModule
+  standalone: false, // this is now required when using NgModule
   selector: 'app-user-toolbar',
   templateUrl: './user-toolbar.html',
   styleUrl: './user-toolbar.scss',
 })
 export class UserToolbar implements OnInit {
-
   //private router = inject(Router);
 
   private loggedInService = inject(LoggedInService);
@@ -30,11 +28,10 @@ export class UserToolbar implements OnInit {
   //}
 
   ngOnInit() {
-    this.loggedInService.castUser.subscribe(data => {
+    this.loggedInService.castUser.subscribe((data) => {
       console.log('UserToolbar: user name changed to', data);
       this.user = data;
     });
-
   }
 
   //navigateToLogin() {
@@ -62,5 +59,4 @@ export class UserToolbar implements OnInit {
   //  // Standard navigation
   //  this.router.navigate(['/import-export']);
   //}
-
 }

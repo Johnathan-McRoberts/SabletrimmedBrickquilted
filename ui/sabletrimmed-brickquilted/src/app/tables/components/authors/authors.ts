@@ -23,31 +23,28 @@ import { BookTablesService } from './../../../tables/services/book-tables-servic
 import { IBookAuthor } from '../../../shared/models/books/ibook-author';
 
 @Component({
-  imports:
-    [
-      CommonModule,
+  imports: [
+    CommonModule,
 
-      MatButtonModule,
-      MatChipsModule,
-      MatFormFieldModule,
-      MatIconModule,
-      MatInputModule,
-      MatPaginatorModule,
-      MatProgressSpinnerModule,
-      MatSortModule,
-      MatTableModule,
-      MatTabsModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
 
-      SharedModule
-    ],
+    SharedModule,
+  ],
   selector: 'app-authors',
   templateUrl: './authors.html',
   styleUrl: './authors.scss',
 })
 export class Authors implements AfterViewInit {
-
   constructor() {
-
     this._authors = [];
 
     this.dataSource = new MatTableDataSource(this._authors);
@@ -75,36 +72,35 @@ export class Authors implements AfterViewInit {
   ];
   public columnsToDisplayWithExpand = [...this.columns, 'expand'];
 
-  public get loading(): boolean { return this._authors === undefined; }
-  public get hasData(): boolean { return !this.loading; }
+  public get loading(): boolean {
+    return this._authors === undefined;
+  }
+  public get hasData(): boolean {
+    return !this.loading;
+  }
 
-  public get displayedColumns(): string[] { return this.columnsToDisplayWithExpand; }
+  public get displayedColumns(): string[] {
+    return this.columnsToDisplayWithExpand;
+  }
 
   ngAfterViewInit() {
     this.getAuthors();
   }
 
   getAuthors() {
-    this._bookTablesService
-      .getAuthors()
-      .subscribe(
-        resp => {
-          console.log('Rxed resp:', JSON.stringify(resp));
-          if (resp !== null && resp !== undefined && resp.length > 0) {
-
-            // got the data ok 
-            this._authors = resp;
-            this.dataSource = new MatTableDataSource(this._authors);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          }
-          else {
-
-            // an error occured
-            this.openSnackBar('Get Authors failed: ', 'OK');
-          }
-
-        });
+    this._bookTablesService.getAuthors().subscribe((resp) => {
+      console.log('Rxed resp:', JSON.stringify(resp));
+      if (resp !== null && resp !== undefined && resp.length > 0) {
+        // got the data ok
+        this._authors = resp;
+        this.dataSource = new MatTableDataSource(this._authors);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      } else {
+        // an error occured
+        this.openSnackBar('Get Authors failed: ', 'OK');
+      }
+    });
   }
 
   openSnackBar(message: string, action: string) {
@@ -119,7 +115,6 @@ export class Authors implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
 
   /** Checks whether an element is expanded. */
   isExpanded(element: IBookAuthor) {

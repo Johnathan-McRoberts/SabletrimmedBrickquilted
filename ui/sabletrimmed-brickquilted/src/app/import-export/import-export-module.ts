@@ -16,7 +16,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatRadioModule } from '@angular/material/radio';
 
-
 import { SharedModule } from './../shared/shared-module';
 
 import { ImportExportOverview } from './components/import-export-overview/import-export-overview';
@@ -28,7 +27,6 @@ import { ExportService } from './services/export-service';
 @NgModule({
   declarations: [ImportExportOverview],
   imports: [
-
     CommonModule,
     FormsModule,
     MatButtonModule,
@@ -45,7 +43,6 @@ import { ExportService } from './services/export-service';
     MatSnackBarModule,
     MatTabsModule,
     SharedModule,
-
 
     ExportToDoc,
   ],

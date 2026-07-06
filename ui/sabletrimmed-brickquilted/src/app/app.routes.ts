@@ -7,7 +7,6 @@ import { TablesModule } from './tables/tables-module';
 import { UserLoginModule } from './user-login/user-login-module';
 import { SharedModule } from './shared/shared-module';
 
-
 import { Login } from './user-login/components/login/login';
 import { TablesOverview } from './tables/components/tables-overview/tables-overview';
 import { ChartsOverview } from './charts/components/charts-overview/charts-overview';
@@ -36,27 +35,27 @@ export const routes: Routes = [
     title: 'Tables',
     pathMatch: 'full',
     component: TablesOverview,
-    canActivate: [loggedInGuard]
+    canActivate: [loggedInGuard],
   },
   {
     path: 'charts',
     title: 'Charts',
     pathMatch: 'full',
     component: ChartsOverview,
-    canActivate: [loggedInGuard]
+    canActivate: [loggedInGuard],
   },
   {
     path: 'import-export',
     title: 'Import/Export',
     pathMatch: 'full',
     component: ImportExportOverview,
-    canActivate: [loggedInGuard]
+    canActivate: [loggedInGuard],
   },
   {
     path: 'forms',
     title: 'Forms',
     pathMatch: 'full',
     component: FormsOverview,
-    canActivate: [loggedInGuard]
+    canActivate: [loggedInGuard],
   },
 ];

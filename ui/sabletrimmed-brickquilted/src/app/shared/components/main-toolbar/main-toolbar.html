@@ -1,11 +1,10 @@
 <mat-toolbar color="primary" class="toolbar-button-row">
-
   <button (click)="navigateToLogin()" matButton="filled">
     <mat-icon>login</mat-icon>
     <span>&nbsp; Login</span>
   </button>
 
-  <span>&nbsp; Books {{displayuser}}</span>
+  <span>&nbsp; Books {{ displayuser }}</span>
   <span class="toolbar-spacer"></span>
 
   <button (click)="navigateToTables()" matButton="filled" [disabled]="isNotLoggedIn">
@@ -32,6 +31,4 @@
     <mat-icon>account_circle</mat-icon>
     <span>&nbsp; Users</span>
   </button>
-
 </mat-toolbar>
-

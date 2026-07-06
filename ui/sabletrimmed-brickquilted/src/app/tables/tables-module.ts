@@ -15,9 +15,7 @@ import { TablesOverview } from './components/tables-overview/tables-overview';
 import { BookTablesService } from './services/book-tables-service';
 
 @NgModule({
-  declarations: [
-    TablesOverview
-  ],
+  declarations: [TablesOverview],
   imports: [
     Authors,
     BookTallies,
@@ -27,12 +25,9 @@ import { BookTablesService } from './services/book-tables-service';
     MatButtonModule,
     MatIconModule,
     MatTabsModule,
-    SharedModule
+    SharedModule,
   ],
-  exports:
-    [
-      TablesOverview
-    ],
-  providers: [BookTablesService]
+  exports: [TablesOverview],
+  providers: [BookTablesService],
 })
 export class TablesModule {}

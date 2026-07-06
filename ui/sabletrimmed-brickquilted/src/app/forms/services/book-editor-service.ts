@@ -6,16 +6,13 @@ import { IEditorDetails } from '../models/ieditor-details';
 import { IAddBookRequestDto } from '../models/add-book-request-dto';
 import { IAddBookResponseDto } from '../models/add-book-response-dto';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class BookEditorService {
-
   private http = inject(HttpClient);
 
   public getEditorDetails(): Observable<IEditorDetails> {
-
     //set up the url
     const url: string = '/api/BookEditor/editor-details';
 
@@ -24,15 +21,12 @@ export class BookEditorService {
   }
 
   addBook(request: IAddBookRequestDto): Observable<IAddBookResponseDto> {
-
-
     //set up the url
     const url: string = '/api/BookEditor/add-book';
 
     // set up the options
 
-
-    console.log("Calling http.post url :\n", url);
+    console.log('Calling http.post url :\n', url);
 
     // return the observable
     return this.http.post<IAddBookResponseDto>(url, request);

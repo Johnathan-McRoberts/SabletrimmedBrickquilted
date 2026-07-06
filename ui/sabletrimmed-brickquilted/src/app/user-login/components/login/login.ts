@@ -6,13 +6,12 @@ import { UserLoginResponseCode } from '../../../shared/models/user-login-respons
 import { LoggedInService } from './../../../shared/services/logged-in-service';
 
 @Component({
-  standalone: false,  // this is now required when using NgModule
+  standalone: false, // this is now required when using NgModule
   selector: 'app-login',
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
 export class Login {
-
   public hidePassword: boolean = true;
 
   private _loggedInService = inject(LoggedInService);
@@ -28,47 +27,37 @@ export class Login {
 
   protected onInputUserName(event: Event) {
     this.userNameValue.set((event.target as HTMLInputElement).value);
-    console.log("hey I got the user of " + this.userNameValue());
+    console.log('hey I got the user of ' + this.userNameValue());
   }
 
   protected onInputPassword(event: Event) {
     this.passwordValue.set((event.target as HTMLInputElement).value);
-    console.log("hey I got the password as " + this.passwordValue());
+    console.log('hey I got the password as ' + this.passwordValue());
   }
 
   protected onPasswordEnter(event: Event) {
-    console.log("The password is " + this.passwordValue() + " and I've to hit enter");
+    console.log('The password is ' + this.passwordValue() + " and I've to hit enter");
     this.submitLogin();
   }
 
-
   submitLogin() {
+    console.log('submit login for : u = ' + this.userNameValue() + ' p = ' + this.passwordValue());
 
-    console.log("submit login for : u = " + this.userNameValue() + " p = " + this.passwordValue());
+    this._loggedInService
+      .getUserLogin(this.userNameValue(), this.passwordValue())
+      .subscribe((resp) => {
+        console.log('Updated resp:', JSON.stringify(resp));
+        if (resp !== null && resp !== undefined) {
+          if (resp.errorCode === UserLoginResponseCode.Success) {
+            this.openSnackBar('Login successful!', 'OK');
 
-    this
-      ._loggedInService
-      .getUserLogin(
-        this.userNameValue(),
-        this.passwordValue())
-      .subscribe(
-        resp => {
-          console.log('Updated resp:', JSON.stringify(resp));
-          if (resp !== null && resp !== undefined) {
+            this._loggedInService.setLoggedInUser(resp);
 
-            if (resp.errorCode === UserLoginResponseCode.Success) {
-              this.openSnackBar('Login successful!', 'OK');
-
-              this._loggedInService.setLoggedInUser(resp);
-
-              this.router.navigateByUrl('tables');
-            }
-            else {
-
-              this.openSnackBar('Login failed: ' + resp.failReason, 'OK');
-            }
+            this.router.navigateByUrl('tables');
+          } else {
+            this.openSnackBar('Login failed: ' + resp.failReason, 'OK');
           }
-        });
+        }
+      });
   }
 }
-

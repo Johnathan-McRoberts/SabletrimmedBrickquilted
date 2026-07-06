@@ -1,5 +1,4 @@
 export interface IAddBookRequestDto {
-
   date: Date;
   author: string;
   title: string;

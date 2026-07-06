@@ -1,5 +1,4 @@
 export interface UserLoginResponse {
-
   name: string;
   errorCode: number;
   failReason: string;

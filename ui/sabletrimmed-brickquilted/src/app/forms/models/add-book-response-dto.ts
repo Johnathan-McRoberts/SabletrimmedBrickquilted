@@ -5,11 +5,10 @@ export enum BookReadAddResponseCode {
   Duplicate,
   UnknownUser,
   InvalidItem,
-  UnknownItem
-};
+  UnknownItem,
+}
 
 export interface IAddBookResponseDto {
-
   newItem: IReadBook | null;
 
   errorCode: number;

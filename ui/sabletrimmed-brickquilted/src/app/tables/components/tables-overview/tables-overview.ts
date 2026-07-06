@@ -6,13 +6,12 @@ import { Authors } from './../authors/authors';
 import { ReadBooks } from './../read-books/read-books';
 
 @Component({
-  standalone: false,  // this is now required when using NgModule
+  standalone: false, // this is now required when using NgModule
   selector: 'app-tables-overview',
   templateUrl: './tables-overview.html',
   styleUrl: './tables-overview.scss',
 })
 export class TablesOverview implements OnInit {
-
   //private router = inject(Router);
 
   private loggedInService = inject(LoggedInService);
@@ -27,10 +26,9 @@ export class TablesOverview implements OnInit {
   //}
 
   ngOnInit() {
-    this.loggedInService.castUser.subscribe(data => {
+    this.loggedInService.castUser.subscribe((data) => {
       console.log('TablesOverview: user name changed to', data);
       this.user = data;
     });
-
   }
 }

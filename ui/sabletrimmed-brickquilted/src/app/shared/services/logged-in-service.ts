@@ -11,7 +11,6 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class LoggedInService {
-
   private http = inject(HttpClient);
   private baseUrl: string = environment.baseUrl;
 
@@ -25,11 +24,11 @@ export class LoggedInService {
   }
 
   public get loggedInUserName(): string {
-    return (this.currentUser !== null) ? this.currentUser.name : '';
+    return this.currentUser !== null ? this.currentUser.name : '';
   }
 
   public get loggedInUserId(): string {
-    return (this.currentUser !== null) ? this.currentUser.userId : '';
+    return this.currentUser !== null ? this.currentUser.userId : '';
   }
 
   public setLoggedInUser(user: UserLoginResponse): void {
@@ -48,17 +47,14 @@ export class LoggedInService {
     this.userName.next(newUserName);
   }
 
-  constructor() { }
+  constructor() {}
 
-  getUserLogin(
-    userName: string,
-    userPassword: string): Observable<UserLoginResponse> {
-
+  getUserLogin(userName: string, userPassword: string): Observable<UserLoginResponse> {
     // set up the request payload
     const request: UserLoginRequest = {
       name: userName,
       password: userPassword,
-    }
+    };
 
     //set up the url
     const url: string = '/api/UserLogin/log-in';

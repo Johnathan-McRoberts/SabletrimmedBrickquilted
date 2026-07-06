@@ -7,10 +7,9 @@ import { LoggedInService } from './../../../shared/services/logged-in-service';
   selector: 'app-main-toolbar',
   templateUrl: './main-toolbar.html',
   styleUrls: ['./main-toolbar.scss'],
-  standalone: false
+  standalone: false,
 })
 export class MainToolbar implements OnInit {
-
   private router = inject(Router);
   private loggedInService = inject(LoggedInService);
 
@@ -24,16 +23,14 @@ export class MainToolbar implements OnInit {
 
   public get displayuser(): string {
     return this.loggedInService.isLoggedIn ? ': ' + this.loggedInService.loggedInUserName : '';
-
   }
 
   public user: string = '';
   ngOnInit() {
-    this.loggedInService.castUser.subscribe(user => {
+    this.loggedInService.castUser.subscribe((user) => {
       console.log('MainToolbar: user name changed to', user);
       this.user = user;
     });
-
   }
 
   navigateToLogin() {

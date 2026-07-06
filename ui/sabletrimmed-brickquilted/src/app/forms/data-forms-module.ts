@@ -44,7 +44,7 @@ import { FormsOverview } from './components/forms-overview/forms-overview';
     MatStepperModule,
     MatTabsModule,
 
-    SharedModule
+    SharedModule,
   ],
   exports: [FormsOverview],
 })

@@ -1,4 +1,4 @@
-import { IReadBook } from "./iread-book";
+import { IReadBook } from './iread-book';
 
 export interface IBookAuthor {
   Name: string;

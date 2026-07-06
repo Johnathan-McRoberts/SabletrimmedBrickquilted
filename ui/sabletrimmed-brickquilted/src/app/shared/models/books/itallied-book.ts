@@ -1,6 +1,5 @@
 export interface ITalliedBook {
-
-  DateString: string
+  DateString: string;
   Date: Date;
   Author: string;
   Title: string;

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 
-
 import { IBookAuthor } from '../../shared/models/books/ibook-author';
 import { IReadBook } from '../../shared/models/books/iread-book';
 import { ITalliedBook } from '../../shared/models/books/itallied-book';
@@ -13,14 +12,12 @@ import { ITalliedBook } from '../../shared/models/books/itallied-book';
   providedIn: 'root',
 })
 export class BookTablesService {
-
   private baseUrl: string = environment.baseUrl;
   private http = inject(HttpClient);
 
-  constructor() { }
+  constructor() {}
 
   getBookTallies(): Observable<ITalliedBook[]> {
-
     //set up the url
     const url: string = '/api/BookTables/tallied-books';
 
@@ -29,7 +26,6 @@ export class BookTablesService {
   }
 
   getReadBooks(): Observable<IReadBook[]> {
-
     //set up the url
     const url: string = '/api/BookTables/read-books';
 
@@ -38,7 +34,6 @@ export class BookTablesService {
   }
 
   getAuthors(): Observable<IBookAuthor[]> {
-
     //set up the url
     const url: string = '/api/BookTables/book-authors';
 

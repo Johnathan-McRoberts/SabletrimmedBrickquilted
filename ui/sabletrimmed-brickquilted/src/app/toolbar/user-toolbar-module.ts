@@ -9,15 +9,7 @@ import { SharedModule } from './../shared/shared-module';
 
 @NgModule({
   declarations: [UserToolbar],
-  imports:
-    [
-      CommonModule,
-
-      MatButtonModule,
-      MatIconModule,
-      MatToolbarModule,
-      SharedModule
-  ],
-  exports: [UserToolbar]
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatToolbarModule, SharedModule],
+  exports: [UserToolbar],
 })
 export class UserToolbarModule {}

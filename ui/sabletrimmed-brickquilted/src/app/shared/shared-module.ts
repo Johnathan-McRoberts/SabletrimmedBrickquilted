@@ -8,17 +8,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MainToolbar } from './components/main-toolbar/main-toolbar';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    MatToolbarModule
-  ],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatToolbarModule],
   declarations: [MainToolbar],
-  exports:
-    [
-      MainToolbar
-    ],
-  providers: []
+  exports: [MainToolbar],
+  providers: [],
 })
 export class SharedModule {}

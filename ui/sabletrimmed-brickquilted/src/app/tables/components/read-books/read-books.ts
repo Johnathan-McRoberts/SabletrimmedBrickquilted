@@ -22,33 +22,29 @@ import { BookTablesService } from './../../../tables/services/book-tables-servic
 
 import { IReadBook } from '../../../shared/models/books/iread-book';
 
-
 @Component({
-  imports:
-    [
-      CommonModule,
+  imports: [
+    CommonModule,
 
-      MatButtonModule,
-      MatChipsModule,
-      MatFormFieldModule,
-      MatIconModule,
-      MatInputModule,
-      MatPaginatorModule,
-      MatProgressSpinnerModule,
-      MatSortModule,
-      MatTableModule,
-      MatTabsModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
 
-      SharedModule
-    ],
+    SharedModule,
+  ],
   selector: 'app-read-books',
   templateUrl: './read-books.html',
   styleUrl: './read-books.scss',
 })
 export class ReadBooks implements AfterViewInit {
-
   constructor() {
-
     this._books = [];
 
     this.dataSource = new MatTableDataSource(this._books);
@@ -67,44 +63,38 @@ export class ReadBooks implements AfterViewInit {
 
   public expandedElement: IReadBook | null = null;
 
-  private readonly columns: string[] = [
-    'date',
-    'author',
-    'title',
-    'pages',
-  ];
+  private readonly columns: string[] = ['date', 'author', 'title', 'pages'];
   public columnsToDisplayWithExpand = [...this.columns, 'expand'];
 
-  public get loading(): boolean { return this._books === undefined; }
-  public get hasData(): boolean { return !this.loading; }
+  public get loading(): boolean {
+    return this._books === undefined;
+  }
+  public get hasData(): boolean {
+    return !this.loading;
+  }
 
-  public get displayedColumns(): string[] { return this.columnsToDisplayWithExpand; }
+  public get displayedColumns(): string[] {
+    return this.columnsToDisplayWithExpand;
+  }
 
   ngAfterViewInit() {
     this.getBooks();
   }
 
   getBooks() {
-    this._bookTablesService
-      .getReadBooks()
-      .subscribe(
-        resp => {
-          console.log('Rxed resp:', JSON.stringify(resp));
-          if (resp !== null && resp !== undefined && resp.length > 0) {
-
-            // got the data ok 
-            this._books = resp;
-            this.dataSource = new MatTableDataSource(this._books);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          }
-          else {
-
-            // an error occured
-            this.openSnackBar('Get Books read failed: ', 'OK');
-          }
-
-        });
+    this._bookTablesService.getReadBooks().subscribe((resp) => {
+      console.log('Rxed resp:', JSON.stringify(resp));
+      if (resp !== null && resp !== undefined && resp.length > 0) {
+        // got the data ok
+        this._books = resp;
+        this.dataSource = new MatTableDataSource(this._books);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      } else {
+        // an error occured
+        this.openSnackBar('Get Books read failed: ', 'OK');
+      }
+    });
   }
 
   openSnackBar(message: string, action: string) {
@@ -120,7 +110,6 @@ export class ReadBooks implements AfterViewInit {
     }
   }
 
-
   /** Checks whether an element is expanded. */
   isExpanded(element: IReadBook) {
     return this.expandedElement === element;
@@ -132,4 +121,3 @@ export class ReadBooks implements AfterViewInit {
     this.expandedElement = this.isExpanded(element) ? null : element;
   }
 }
-

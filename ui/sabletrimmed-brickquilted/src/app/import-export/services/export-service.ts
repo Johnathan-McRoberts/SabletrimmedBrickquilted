@@ -10,15 +10,13 @@ import { ExportOptionsResponseDto } from '../models/export-options-response-dto'
   providedIn: 'root',
 })
 export class ExportService {
-
   private baseUrl: string = environment.baseUrl;
 
   private http = inject(HttpClient);
 
-  constructor() { }
+  constructor() {}
 
   public getExportOptions(): Observable<ExportOptionsResponseDto> {
-
     //set up the url
     const url: string = '/api/Export/options';
 
@@ -26,11 +24,7 @@ export class ExportService {
     return this.http.get<ExportOptionsResponseDto>(this.baseUrl + url);
   }
 
-  public getExport(
-    user: string,
-    documentType: string,
-    exportOption: string
-  ) {
+  public getExport(user: string, documentType: string, exportOption: string) {
     const url: string = this.baseUrl + `/api/Export/export`;
 
     return this.http
@@ -67,4 +61,3 @@ export class ExportService {
     return fileName ? decodeURIComponent(fileName) : null;
   }
 }
-

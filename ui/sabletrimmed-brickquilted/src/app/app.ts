@@ -16,26 +16,25 @@ import { UserToolbarModule } from './toolbar/user-toolbar-module';
 
 @Component({
   selector: 'app-root',
-  imports:
-    [
-      HttpClientModule,
-      RouterOutlet,
+  imports: [
+    HttpClientModule,
+    RouterOutlet,
 
-      MatButtonModule,
-      MatDividerModule,
-      MatIconModule,
-      MatTabsModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatTabsModule,
 
-      SharedModule,
-      ChartsModule,
-      DataFormsModule,
-      TablesModule,
-      UserLoginModule,
+    SharedModule,
+    ChartsModule,
+    DataFormsModule,
+    TablesModule,
+    UserLoginModule,
 
-      UserToolbarModule
-    ],
+    UserToolbarModule,
+  ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
   protected readonly title = signal('sabletrimmed-brickquilted');
