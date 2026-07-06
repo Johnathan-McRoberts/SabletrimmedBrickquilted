@@ -15,7 +15,7 @@ export class TablesOverview implements OnInit {
   //private router = inject(Router);
 
   private loggedInService = inject(LoggedInService);
-  public user: string = '';
+  public user = '';
 
   //public get displayUser(): string {
   //  return this.user ? this.user : 'Guest';

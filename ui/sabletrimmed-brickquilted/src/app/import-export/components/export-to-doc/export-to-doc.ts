@@ -98,13 +98,13 @@ export class ExportToDoc implements OnInit {
 
   // selected export option
 
-  selectedExportOpt: string = '';
+  selectedExportOpt = '';
 
   public onExportSelection() {
     console.log('now selected : ', this.selectedExportOpt);
     this._selectedExportOption = this.selectedExportOpt;
 
-    let isDisabledVal = !this.hasExportOption || !this.hasDocumentTypeSelection;
+    const isDisabledVal = !this.hasExportOption || !this.hasDocumentTypeSelection;
     this.isDisabled.set(isDisabledVal);
     console.log('isDisabled: ', isDisabledVal);
   }
@@ -122,13 +122,13 @@ export class ExportToDoc implements OnInit {
 
   // selected document type
 
-  selectedDocType: string = '';
+  selectedDocType = '';
 
   public onDocSelection() {
     console.log('now selected : ', this.selectedDocType);
     this._selectedDocumentType = this.selectedDocType;
 
-    let isDisabledVal = !this.hasExportOption || !this.hasDocumentTypeSelection;
+    const isDisabledVal = !this.hasExportOption || !this.hasDocumentTypeSelection;
     this.isDisabled.set(isDisabledVal);
     console.log('isDisabled: ', isDisabledVal);
   }
@@ -174,9 +174,9 @@ export class ExportToDoc implements OnInit {
           this._loggedInService.loggedInUserName,
       );
 
-      let user: string = this._loggedInService.loggedInUserName;
-      let documentType: string = this._selectedDocumentType!;
-      let exportOption: string = this._selectedExportOption!;
+      const user: string = this._loggedInService.loggedInUserName;
+      const documentType: string = this._selectedDocumentType!;
+      const exportOption: string = this._selectedExportOption!;
 
       this._downloadService.downloadDocument(user, documentType, exportOption);
     }
@@ -192,7 +192,7 @@ export class ExportToDoc implements OnInit {
       console.log('Rxed resp:', JSON.stringify(resp).substring(0, 100));
       if (resp !== null && resp !== undefined && resp.length > 0) {
         // got the data ok
-        let tallies = resp;
+        const tallies = resp;
 
         this.displayText = JSON.stringify(tallies, undefined, 2);
         this.exportDataToDisplay = true;
@@ -207,6 +207,6 @@ export class ExportToDoc implements OnInit {
     //this.displayText = `Exporting ${this.selectedDocumentType} as ${this.selectedExportOption}`;
   }
 
-  public displayText: string = '';
-  public exportDataToDisplay: boolean = false;
+  public displayText = '';
+  public exportDataToDisplay = false;
 }

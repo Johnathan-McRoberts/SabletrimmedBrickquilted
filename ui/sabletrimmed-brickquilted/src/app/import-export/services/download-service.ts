@@ -1,6 +1,6 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { filter, first, map, merge, Observable, switchMap, takeUntil, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -12,8 +12,6 @@ import { ExportService } from './export-service';
 export class DownloadService {
   private _exportService = inject(ExportService);
   private _snackBar = inject(MatSnackBar);
-
-  constructor() {}
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, { duration: 3000 });
@@ -28,92 +26,7 @@ export class DownloadService {
       console.log('Rxed resp:', resp.filename);
       this.saveResponse(resp);
       this.openSnackBar('Your report has been successfully downloaded', 'OK');
-
-      //if (resp !== null && resp !== undefined && resp.length > 0) {
-
-      //  // got the data ok
-      //  this._books = resp;
-      //  this.dataSource = new MatTableDataSource(this._books);
-      //  this.dataSource.paginator = this.paginator;
-      //  this.dataSource.sort = this.sort;
-      //}
-      //else {
-
-      //  // an error occured
-      //  this.openSnackBar('Get Books read failed: ', 'OK');
-      //}
     });
-
-    //this.reports$
-    //  .pipe(
-    //    first(),
-    //    map((data) => {
-    //      const report = data.reports.find((r) => r.id == reportId);
-    //      return report
-    //        ? {
-    //          id: report.id,
-    //          filename: `${report.displayPublicationName}.pdf`,
-    //        }
-    //        : null;
-    //    }),
-    //    tap((report) => {
-    //      if (!report) {
-    //        this.toastService.remove(startingToast);
-    //        this.toastService.show(
-    //          new Toast({
-    //            headerIcon: mdiAlertCircleOutline,
-    //            headerClass: 'text-danger fw-bold',
-    //            header: 'Error',
-    //            textOrTpl: 'Report not found',
-    //            delay: 3000,
-    //            autohide: true,
-    //          }),
-    //        );
-    //      }
-    //    }),
-    //    filter((r) => r !== null),
-    //    switchMap((report: any) => {
-    //      let reportLoaders = formats
-    //        .map((f) => this.getReportFile(report, f, subsectionIds))
-    //        .filter((l) => l != null) as Observable<{
-    //          filename: string;
-    //          response: HttpResponse<Blob>;
-    //        }>[];
-    //      return merge(...reportLoaders);
-    //    }),
-    //    takeUntil(this.destroyed$),
-    //  )
-    //  .subscribe({
-    //    next: (fileResponse: {
-    //      response: HttpResponse<Blob>;
-    //      filename: string;
-    //    }) => {
-    //      this.saveResponse(fileResponse);
-    //      this.toastService.show(
-    //        new Toast({
-    //          headerIcon: mdiCheckCircle,
-    //          headerClass: 'text-success fw-bold',
-    //          header: 'Success',
-    //          textOrTpl: 'Your report has been successfully downloaded',
-    //          delay: 3000,
-    //          autohide: true,
-    //        }),
-    //      );
-    //    },
-    //    error: () => {
-    //      this.toastService.remove(startingToast);
-    //      this.toastService.show(
-    //        new Toast({
-    //          headerIcon: mdiAlertCircleOutline,
-    //          headerClass: 'text-danger fw-bold',
-    //          header: 'Error',
-    //          textOrTpl: 'There was an issue with your download',
-    //          delay: 3000,
-    //          autohide: true,
-    //        }),
-    //      );
-    //    },
-    //  });
   }
 
   getDocumentFile(

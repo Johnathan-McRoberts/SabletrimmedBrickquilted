@@ -1,11 +1,11 @@
 export class NewBookBasics {
   public Date: Date = new Date('1999-12-31T23:59:00');
-  public Author: string = '';
-  public Title: string = '';
-  public Pages: number = 0;
-  public Nationality: string = '';
-  public OriginalLanguage: string = '';
-  public Format: string = '';
+  public Author = '';
+  public Title = '';
+  public Pages = 0;
+  public Nationality = '';
+  public OriginalLanguage = '';
+  public Format = '';
 
   public isValid(): boolean {
     if (this.Date.getFullYear() <= 2000) return false;

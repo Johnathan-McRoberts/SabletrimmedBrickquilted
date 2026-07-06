@@ -3,7 +3,8 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": "8c06a793-3b67-4656-a1de-5857e025716a"
+    "analytics": "8c06a793-3b67-4656-a1de-5857e025716a",
+    "schematicCollections": ["angular-eslint"]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -88,6 +89,12 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
         }
       }
     }

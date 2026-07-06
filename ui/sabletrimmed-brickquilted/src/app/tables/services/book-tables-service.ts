@@ -19,7 +19,7 @@ export class BookTablesService {
 
   getBookTallies(): Observable<ITalliedBook[]> {
     //set up the url
-    const url: string = '/api/BookTables/tallied-books';
+    const url = '/api/BookTables/tallied-books';
 
     // return the observable
     return this.http.get<ITalliedBook[]>(this.baseUrl + url);
@@ -27,7 +27,7 @@ export class BookTablesService {
 
   getReadBooks(): Observable<IReadBook[]> {
     //set up the url
-    const url: string = '/api/BookTables/read-books';
+    const url = '/api/BookTables/read-books';
 
     // return the observable
     return this.http.get<IReadBook[]>(this.baseUrl + url);
@@ -35,7 +35,7 @@ export class BookTablesService {
 
   getAuthors(): Observable<IBookAuthor[]> {
     //set up the url
-    const url: string = '/api/BookTables/book-authors';
+    const url = '/api/BookTables/book-authors';
 
     // return the observable
     return this.http.get<IBookAuthor[]>(this.baseUrl + url);

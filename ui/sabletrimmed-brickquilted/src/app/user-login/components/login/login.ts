@@ -12,7 +12,7 @@ import { LoggedInService } from './../../../shared/services/logged-in-service';
   styleUrl: './login.scss',
 })
 export class Login {
-  public hidePassword: boolean = true;
+  public hidePassword = true;
 
   private _loggedInService = inject(LoggedInService);
   private _snackBar = inject(MatSnackBar);

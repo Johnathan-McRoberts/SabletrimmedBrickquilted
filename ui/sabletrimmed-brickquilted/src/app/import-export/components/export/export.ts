@@ -14,11 +14,6 @@ import { DownloadService } from '../../services/download-service';
 import { ExportService } from '../../services/export-service';
 import { LoggedInService } from './../../../shared/services/logged-in-service';
 
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
 @Component({
   selector: 'app-export',
   imports: [MatRadioModule, MatSnackBarModule],
@@ -115,52 +110,10 @@ export class Export implements AfterViewInit {
         // an error occured
         this.openSnackBar('Get Export options failed: ', 'OK');
       }
-
-      //console.log('Rxed resp:', JSON.stringify(resp));
-      //if (resp !== null && resp !== undefined && resp.length > 0) {
-
-      //  // got the data ok
-      //  this._books = resp;
-      //  this.dataSource = new MatTableDataSource(this._books);
-      //  this.dataSource.paginator = this.paginator;
-      //  this.dataSource.sort = this.sort;
-      //}
-      //else {
-
-      //  // an error occured
-      //  this.openSnackBar('Get Export options failed: ', 'OK');
-      //}
     });
   }
 
-  //ngAfterViewInit() {
-  //  setTimeout(() => {
-  //    this.getOptions();
-  //  });
-  //}
-
-  //ngOnInit() {
-  //  this.getOptions();
-  //}
-
   getOptions() {
-    //this._exportService
-    //  .getExportOptions()
-    //  .subscribe(
-    //    resp => {
-    //      console.log('Rxed resp:', JSON.stringify(resp));
-    //      if (resp !== null && resp !== undefined && resp.documentTypes.length > 0) {
-
-    //        // got the data ok
-    //        this._options = resp;
-    //        this.setupDocumentTypes();
-    //      }
-    //      else {
-
-    //        // an error occured
-    //        this.openSnackBar('Get Export options failed: ', 'OK');
-    //      }
-    //    });
     this._changeDetectorRef.detectChanges();
   }
 
@@ -168,7 +121,7 @@ export class Export implements AfterViewInit {
     if (this._options && this._options.documentTypes.length > 0) {
       this._documentTypes = this._options.documentTypes;
 
-      let selection: IDocumentType = this._options.documentTypes[0];
+      const selection: IDocumentType = this._options.documentTypes[0];
 
       this._selectedDocumentType = selection.name;
 
@@ -179,8 +132,8 @@ export class Export implements AfterViewInit {
 
   setupDocumentTypeDescription() {
     if (this._options && this._selectedDocumentType && this._options.documentTypes.length > 0) {
-      for (let i: number = 0; i < this._options.documentTypes.length; i++) {
-        let documentType: IDocumentType = this._options.documentTypes[i];
+      for (let i = 0; i < this._options.documentTypes.length; i++) {
+        const documentType: IDocumentType = this._options.documentTypes[i];
         if (this._selectedDocumentType === documentType.name) {
           this._selectedDocumentTypeDescription = documentType.description;
         }
@@ -196,7 +149,7 @@ export class Export implements AfterViewInit {
         return;
       }
 
-      let selection: IExportOption = this._exportOptions[0];
+      const selection: IExportOption = this._exportOptions[0];
 
       this._selectedExportOptionName = selection.name;
       this.setupExportOptionDescription();
@@ -205,8 +158,8 @@ export class Export implements AfterViewInit {
 
   setupExportOptionDescription() {
     if (this._options && this._selectedExportOptionName && this._options.exportOptions.length > 0) {
-      for (let i: number = 0; i < this._options.exportOptions.length; i++) {
-        let exportOption: IExportOption = this._options.exportOptions[i];
+      for (let i = 0; i < this._options.exportOptions.length; i++) {
+        const exportOption: IExportOption = this._options.exportOptions[i];
         if (this._selectedExportOptionName === exportOption.name) {
           this._selectedExportOptionDescription = exportOption.description;
         }
@@ -216,12 +169,12 @@ export class Export implements AfterViewInit {
 
   private getAvailableOptionsForDocumentType() {
     if (this._options && this._selectedDocumentType && this._options.exportOptions.length > 0) {
-      let availableOptions: IExportOption[] = [];
+      const availableOptions: IExportOption[] = [];
 
-      for (let i: number = 0; i < this._options.exportOptions.length; i++) {
-        let exportOption: IExportOption = this._options.exportOptions[i];
+      for (let i = 0; i < this._options.exportOptions.length; i++) {
+        const exportOption: IExportOption = this._options.exportOptions[i];
 
-        for (let j: number = 0; j < exportOption.supportedDocumentTypes.length; j++) {
+        for (let j = 0; j < exportOption.supportedDocumentTypes.length; j++) {
           if (exportOption.supportedDocumentTypes[j] === this._selectedDocumentType) {
             availableOptions.push(exportOption);
             break;

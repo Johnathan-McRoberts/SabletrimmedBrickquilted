@@ -11,7 +11,7 @@ export class ImportExportOverview implements OnInit {
   //private router = inject(Router);
 
   private loggedInService = inject(LoggedInService);
-  public user: string = '';
+  public user = '';
 
   ngOnInit() {
     this.loggedInService.castUser.subscribe((data) => {

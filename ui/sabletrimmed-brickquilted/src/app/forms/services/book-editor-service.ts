@@ -14,7 +14,7 @@ export class BookEditorService {
 
   public getEditorDetails(): Observable<IEditorDetails> {
     //set up the url
-    const url: string = '/api/BookEditor/editor-details';
+    const url = '/api/BookEditor/editor-details';
 
     // return the observable
     return this.http.get<IEditorDetails>(url);
@@ -22,7 +22,7 @@ export class BookEditorService {
 
   addBook(request: IAddBookRequestDto): Observable<IAddBookResponseDto> {
     //set up the url
-    const url: string = '/api/BookEditor/add-book';
+    const url = '/api/BookEditor/add-book';
 
     // set up the options
 

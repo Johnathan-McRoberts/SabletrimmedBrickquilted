@@ -18,7 +18,7 @@ export class ExportService {
 
   public getExportOptions(): Observable<ExportOptionsResponseDto> {
     //set up the url
-    const url: string = '/api/Export/options';
+    const url = '/api/Export/options';
 
     // return the observable
     return this.http.get<ExportOptionsResponseDto>(this.baseUrl + url);

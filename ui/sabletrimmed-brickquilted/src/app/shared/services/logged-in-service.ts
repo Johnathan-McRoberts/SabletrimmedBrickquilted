@@ -57,7 +57,7 @@ export class LoggedInService {
     };
 
     //set up the url
-    const url: string = '/api/UserLogin/log-in';
+    const url = '/api/UserLogin/log-in';
 
     // and the query parameters
     const queryParams: string = '?Name=' + userName + '&Password=' + userPassword;

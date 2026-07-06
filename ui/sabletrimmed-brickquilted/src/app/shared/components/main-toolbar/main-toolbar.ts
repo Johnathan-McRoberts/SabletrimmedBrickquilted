@@ -25,7 +25,7 @@ export class MainToolbar implements OnInit {
     return this.loggedInService.isLoggedIn ? ': ' + this.loggedInService.loggedInUserName : '';
   }
 
-  public user: string = '';
+  public user = '';
   ngOnInit() {
     this.loggedInService.castUser.subscribe((user) => {
       console.log('MainToolbar: user name changed to', user);
