@@ -1,0 +1,320 @@
+@let loadingEditorDetails = $loadingEditorDetails();
+
+<p>add-book-stepper works!</p>
+
+@if (loadingEditorDetails) {
+  <mat-spinner></mat-spinner>
+}
+
+@if (!loadingEditorDetails) {
+  <mat-stepper #stepper *ngIf="hasData">
+    <mat-step [stepControl]="basicsFormGroup" errorMessage="Book Basics are required.">
+      <form [formGroup]="basicsFormGroup" class="add-book-form">
+        <ng-template matStepLabel>Fill out the basics for the book</ng-template>
+
+        <div class="form-input-container">
+          <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input
+              matInput
+              formControlName="dateCtrl"
+              type="text"
+              [max]="currentDate"
+              [matDatepicker]="picker"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="form-input-container">
+          <mat-form-field>
+            <mat-label>Author</mat-label>
+
+            <input
+              type="text"
+              placeholder="Author"
+              aria-label="Author"
+              matInput
+              [formControl]="bookAuthorCtrl"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+              @for (author of filteredAuthorOptions | async; track author) {
+                <mat-option [value]="author">{{ author }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <div class="form-input-container">
+          <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Title" formControlName="titleCtrl" required />
+          </mat-form-field>
+        </div>
+
+        <div class="form-input-container">
+          <mat-form-field>
+            <mat-label>Pages</mat-label>
+            <input matInput type="number" min="0" max="3000" formControlName="pagesCtrl" required />
+          </mat-form-field>
+        </div>
+
+        <div class="form-input-container" *ngIf="filteredNationOptions | async">
+          <mat-form-field>
+            <mat-label>Nationality</mat-label>
+
+            <mat-select
+              matInput
+              placeholder="Chosen Country"
+              formControlName="nationalityCtrl"
+              required
+            >
+              @for (country of optionForNations; track country) {
+                <mat-option [value]="country">{{ country }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-input-container">
+          <mat-form-field>
+            <mat-label>Original Language</mat-label>
+
+            <input
+              type="text"
+              placeholder="Language"
+              aria-label="Language"
+              matInput
+              [formControl]="bookLanguageCtrl"
+              [matAutocomplete]="autoLanguage"
+            />
+            <mat-autocomplete autoActiveFirstOption #autoLanguage="matAutocomplete">
+              @for (language of filteredLanguageOptions | async; track language) {
+                <mat-option [value]="language">{{ language }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <div class="form-input-container">
+          <mat-form-field>
+            <mat-label>Format</mat-label>
+            <mat-select matInput placeholder="Format" formControlName="formatCtrl" required>
+              <mat-option value="Book">Book</mat-option>
+              <mat-option value="Comic">Comic</mat-option>
+              <mat-option value="Audio">Audio book</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button
+            mat-raised-button
+            color="primary"
+            matStepperNext
+            [disabled]="!basicsFormGroup.valid"
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step
+      [stepControl]="imageFormGroup"
+      errorMessage="Image Address is required."
+      class="add-book-form"
+    >
+      <form [formGroup]="imageFormGroup">
+        <ng-template matStepLabel>Add an image</ng-template>
+
+        <div class="form-input-container">
+          <mat-form-field>
+            <mat-label>Image URL</mat-label>
+            <input matInput placeholder="an http address" formControlName="imageUrlCtrl" required />
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="imageUrl">
+          <img src="{{ imageUrl }}" height="250" />
+        </div>
+
+        <div>
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="d-grid gap-3 col-sm-4 gap-3 p-2 m-2" style="grid-template-columns: 1fr 1fr">
+              <div class="p-2">
+                <button mat-raised-button type="submit" color="primary" matStepperPrevious>
+                  Back
+                </button>
+              </div>
+
+              <div class="p-2">
+                <button
+                  mat-raised-button
+                  type="submit"
+                  color="primary"
+                  matStepperNext
+                  [disabled]="!imageFormGroup.valid"
+                >
+                  Next
+                </button>
+              </div>
+
+              <div class="col-sm-4"></div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="notesFormGroup" errorMessage="Notes are required.">
+      <form [formGroup]="notesFormGroup" class="add-book-form">
+        <ng-template matStepLabel>Add notes and tags</ng-template>
+        <mat-form-field>
+          <mat-label>Notes</mat-label>
+          <textarea matInput placeholder="Some notes" formControlName="notesCtrl" rows="5" required>
+          </textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Tags</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Tag selection">
+            @for (tag of tags(); track $index) {
+              <mat-chip-row (removed)="removeTag(tag)">
+                {{ tag }}
+                <button matChipRemove [attr.aria-label]="'remove ' + tag">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-grid>
+          <input
+            name="currentTag"
+            placeholder="New Tag..."
+            #tagInput
+            [(ngModel)]="currentTag"
+            [matChipInputFor]="chipGrid"
+            [matAutocomplete]="autoTags"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="addTag($event)"
+            formControlName="tagsCtrl"
+          />
+          <mat-autocomplete
+            #autoTags="matAutocomplete"
+            (optionSelected)="selectedTag($event); tagInput.value = ''"
+          >
+            @for (tag of filteredTags(); track tag) {
+              <mat-option [value]="tag">{{ tag }}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+      <div>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="p-2"></div>
+            </div>
+
+            <div class="col-5"></div>
+
+            <div class="col-5">
+              <div class="p-2"></div>
+            </div>
+
+            <div class="col"></div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <button mat-raised-button type="submit" color="primary" matStepperPrevious>
+                Back
+              </button>
+            </div>
+            <div class="col">
+              <button
+                mat-raised-button
+                [disabled]="
+                  !basicsFormGroup.valid || !imageFormGroup.valid || !notesFormGroup.valid
+                "
+                (click)="onNewBookDisplay()"
+              >
+                Details
+              </button>
+            </div>
+            <div class="col">
+              <button
+                mat-raised-button
+                type="submit"
+                [disabled]="
+                  !basicsFormGroup.valid || !imageFormGroup.valid || !notesFormGroup.valid
+                "
+                color="primary"
+                (click)="onAddNewBook()"
+              >
+                Add
+              </button>
+            </div>
+            <div class="col">
+              <div class="p-2">
+                <button mat-raised-button type="submit" color="primary" (click)="stepper.reset()">
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="add-book-detail-container" *ngIf="canShowDetail">
+          <div class="author">
+            <h4>Author:</h4>
+            <h2>{{ newBookItemAuthor() }}</h2>
+          </div>
+          <div class="title">
+            <h4>Title:</h4>
+            <h2>{{ newBookItemTitle() }}</h2>
+          </div>
+          <div class="pages">
+            <h4>Pages:</h4>
+            <h2>{{ newBookItemPages() }}</h2>
+          </div>
+          <div class="date">
+            <h4>Date:</h4>
+            <h2>{{ newBookItemDateString() }}</h2>
+          </div>
+
+          <div class="image"><img src="{{ newBookItemImageUrl() }}" class="aspectshrink" /></div>
+          <div class="notes">
+            <h3>Notes</h3>
+            <p>{{ newBookItemNotes() }}</p>
+          </div>
+
+          <div class="language">
+            <h4>Language:</h4>
+            {{ newBookItemOriginalLanguage() }}
+          </div>
+          <div class="nation">
+            <h4>Nation:</h4>
+            {{ newBookItemNationality() }}
+          </div>
+          <div class="format">
+            <h4>Format:</h4>
+            {{ newBookItemFormat() }}
+          </div>
+          <div class="tags">
+            <h4>Tags:</h4>
+            <mat-chip-set>
+              <mat-chip *ngFor="let tag of newBookItemTags()">{{ tag }}</mat-chip>
+            </mat-chip-set>
+          </div>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+}

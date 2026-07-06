@@ -18,7 +18,6 @@ import { ITalliedBook } from '../../../shared/models/books/itallied-book';
   styleUrl: './book-tallies.scss',
 })
 export class BookTallies implements OnInit {
-
   readonly $loadingTallies = signal(true);
   readonly $hasTallyData = signal(false);
 

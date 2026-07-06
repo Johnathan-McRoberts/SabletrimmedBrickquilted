@@ -1,0 +1,107 @@
+.add-book-form {
+  display: flex;
+  flex-direction: column;
+  margin: 5px auto;
+  text-align: center;
+  max-width: 600px;
+  padding: 0;
+}
+
+.form-input-container {
+  padding: 1px;
+}
+
+.form-input-container mat-form-field + mat-form-field {
+  margin-left: 8px;
+}
+
+.form-input-container mat-form-field {
+  width: 600px;
+  padding: 0;
+  margin-bottom: -1.25em;
+}
+
+.button {
+  padding: 10px;
+  margin: 5px;
+}
+
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+img.aspectshrink {
+  height: 250px;
+}
+
+.add-book-detail-container {
+  width: 100%;
+  display: grid;
+  grid-template-areas: 'author title pages date' 'image notes notes notes' 'language nation format tags';
+  grid-template-columns: 1fr 1fr 1fr 3fr;
+  gap: 5px;
+  padding: 5px;
+  max-height: 500px;
+}
+
+.add-book-detail-container > div {
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.title {
+  grid-area: title;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.author {
+  grid-area: author;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.pages {
+  grid-area: pages;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.date {
+  grid-area: date;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.image {
+  grid-area: image;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.notes {
+  grid-area: notes;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.nation {
+  grid-area: nation;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.language {
+  grid-area: language;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.format {
+  grid-area: format;
+  border: 1px solid black;
+}
+
+.add-book-detail-container > div.tags {
+  grid-area: tags;
+  border: 1px solid black;
+}

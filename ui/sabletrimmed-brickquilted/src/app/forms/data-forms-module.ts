@@ -20,9 +20,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { SharedModule } from './../shared/shared-module';
 import { FormsOverview } from './components/forms-overview/forms-overview';
+import { AddBookStepper } from './components/add-book-stepper/add-book-stepper';
 
 @NgModule({
-  declarations: [FormsOverview],
+  declarations: [FormsOverview, AddBookStepper],
   imports: [
     CommonModule,
 
