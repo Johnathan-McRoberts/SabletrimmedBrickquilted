@@ -9,6 +9,8 @@
 
 .form-input-container {
   padding: 1px;
+  margin: 5px auto;
+  text-align: center;
 }
 
 .form-input-container mat-form-field + mat-form-field {
@@ -38,7 +40,13 @@
 }
 
 img.aspectshrink {
-  height: 250px;
+  height: 300px;
+}
+
+.form-selected-image {
+  display: block;
+  margin: 5px auto;
+  text-align: center;
 }
 
 .add-book-detail-container {
@@ -48,7 +56,8 @@ img.aspectshrink {
   grid-template-columns: 1fr 1fr 1fr 3fr;
   gap: 5px;
   padding: 5px;
-  max-height: 500px;
+  max-height: 550px;
+  overflow-y: auto;
 }
 
 .add-book-detail-container > div {

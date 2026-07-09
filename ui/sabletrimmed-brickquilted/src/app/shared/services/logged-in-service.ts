@@ -7,12 +7,29 @@ import { UserLoginResponse } from '../models/user-login-response';
 
 import { environment } from '../../../environments/environment';
 
+export type loggedInCallbackType = (newUserName: string) => void;
+
 @Injectable({
   providedIn: 'root',
 })
 export class LoggedInService {
+
+
   private http = inject(HttpClient);
   private baseUrl: string = environment.baseUrl;
+
+  private static loggedInCallbacks: loggedInCallbackType[] = [];
+
+  public registerLoggedInCallback(callback: loggedInCallbackType): void {
+
+    console.log('LoggedInService: registering a callback:', callback);
+    LoggedInService.loggedInCallbacks.push(callback);
+    console.log('LoggedInService: has callback count:', LoggedInService.loggedInCallbacks.length);
+  }
+
+  private userName = new BehaviorSubject<string>('');
+  castUser = this.userName.asObservable();
+
 
   private currentUser: UserLoginResponse | null = null;
 
@@ -36,12 +53,18 @@ export class LoggedInService {
 
     console.log('LoggedInService: setLoggedInUser called with user:', user.name);
     this.editUser(user.name);
+
+
+    console.log('LoggedInService: has callback count:', LoggedInService.loggedInCallbacks.length );
+    for (const callback of LoggedInService.loggedInCallbacks) {
+      callback(user.name);
+    }
+
+    this.userName.next(user.name); 
     console.log('LoggedInService: user name updated to', user.name);
     console.log('LoggedInService: isNotLoggedIn() = ', this.isNotLoggedIn);
   }
 
-  private userName = new BehaviorSubject<string>('Undefined');
-  castUser = this.userName.asObservable();
 
   editUser(newUserName: string) {
     this.userName.next(newUserName);

@@ -1,7 +1,5 @@
 @let loadingEditorDetails = $loadingEditorDetails();
 
-<p>add-book-stepper works!</p>
-
 @if (loadingEditorDetails) {
   <mat-spinner></mat-spinner>
 }
@@ -138,7 +136,7 @@
           </mat-form-field>
         </div>
 
-        <div *ngIf="imageUrl">
+        <div *ngIf="imageUrl" class="form-selected-image">
           <img src="{{ imageUrl }}" height="250" />
         </div>
 
