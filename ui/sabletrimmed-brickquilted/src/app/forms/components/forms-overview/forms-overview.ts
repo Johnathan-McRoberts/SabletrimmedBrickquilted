@@ -8,18 +8,9 @@ import { LoggedInService } from './../../../shared/services/logged-in-service';
   styleUrl: './forms-overview.scss',
 })
 export class FormsOverview implements OnInit {
-  //private router = inject(Router);
 
   private loggedInService = inject(LoggedInService);
   public user = '';
-
-  //public get displayUser(): string {
-  //  return this.user ? this.user : 'Guest';
-  //}
-
-  //public get isNotLoggedIn(): boolean {
-  //  return this.user.length === 0 || this.user === 'Undefined';
-  //}
 
   ngOnInit() {
     this.loggedInService.castUser.subscribe((data) => {

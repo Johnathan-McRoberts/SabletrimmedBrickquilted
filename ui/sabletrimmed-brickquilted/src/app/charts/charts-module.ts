@@ -8,10 +8,19 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SharedModule } from './../shared/shared-module';
 
 import { ChartsOverview } from './components/charts-overview/charts-overview';
+import { BookAndPageRates } from './components/book-and-page-rates/book-and-page-rates';
 
 @NgModule({
   declarations: [ChartsOverview],
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatTabsModule, SharedModule],
+  imports: [
+    BookAndPageRates,
+
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTabsModule,
+
+    SharedModule],
   exports: [ChartsOverview],
 })
 export class ChartsModule {}
