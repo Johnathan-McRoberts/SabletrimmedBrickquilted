@@ -1,0 +1,56 @@
+.export-options-container {
+  width: 100%;
+  display: grid;
+  grid-template-areas: 'export doc buttons';
+  grid-template-columns: 3fr 3fr 2fr;
+  gap: 5px;
+  padding: 5px;
+}
+
+.export-options-container > div {
+  padding: 10px;
+}
+
+.export-options-container > div.export {
+  grid-area: export;
+}
+
+.export-options-container > div.doc {
+  grid-area: doc;
+}
+
+.export-options-container > div.buttons {
+  grid-area: buttons;
+}
+
+.button-options-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-form-field {
+  width: 90%;
+}
+
+.export-display-container {
+  width: 100%;
+  display: grid;
+  grid-template-areas: 'books';
+  grid-template-columns: 8fr;
+  gap: 5px;
+  padding: 5px;
+}
+
+.export-display-container > div.display {
+  grid-area: display;
+  width: 90%;
+  margin: 15px;
+}
+
+.export-display-content {
+  width: 90%;
+  height: 400px;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: scroll;
+}

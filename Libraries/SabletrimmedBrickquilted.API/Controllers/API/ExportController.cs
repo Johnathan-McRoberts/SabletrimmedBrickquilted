@@ -33,7 +33,8 @@ namespace SabletrimmedBrickquilted.API.Controllers.API
 
         [HttpPost]
         [Route("export")]
-        public async Task<IActionResult> GetExport([FromBody] ExportRequestDto request)
+        public async Task<IActionResult> GetExport(
+            [FromBody] ExportRequestDto request)
         {
             _logger.LogInformation(
                 $"Exporting to {request.DocumentType} for type user id: {request.UserId}");
@@ -57,6 +58,21 @@ namespace SabletrimmedBrickquilted.API.Controllers.API
             // Set the headers to allow a file byte stream and return the file.
             Response.Headers.Append("Access-Control-Expose-Headers", "Content-Disposition");
             return File(result.ExportContent, result.ContentType, result.FileDownloadName);
+        }
+
+        [HttpGet]
+        [Route("export-display")]
+        public async Task<ExportDisplayResponseDto> GetExportDisplay(
+            [FromQuery] ExportRequestDto request)
+        {
+            ExportDisplayResponseDto? result =
+                await _exportService.ExportDisplay(request);
+
+            return result ?? new ExportDisplayResponseDto()
+            { 
+                DisplayContent = "No content available", 
+                ContentType = "text/plain" 
+            };
         }
     }
 }

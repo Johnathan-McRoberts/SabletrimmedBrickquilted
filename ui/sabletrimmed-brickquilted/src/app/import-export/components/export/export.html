@@ -1,0 +1,107 @@
+<p>export works (ish)!</p>
+
+<mat-radio-group aria-label="Select an option">
+  <mat-radio-button value="1">Option 1</mat-radio-button>
+  <mat-radio-button value="2">Option 2</mat-radio-button>
+</mat-radio-group>
+
+<!--<div>
+  @if (loading) {
+  <mat-spinner></mat-spinner>
+  }
+  @else {
+  <div>
+    <p>loaded</p>
+    @if (hasData) {
+    <table>
+      <tr>
+        <td>
+
+          <table>
+            <tr>
+              <td>
+                <mat-form-field>
+                  <mat-label>Document type</mat-label>
+
+                  <mat-select [(ngModel)]="selectedDocumentType" name="documentType">
+
+
+                    @for (documentTypeItem of documentTypes; track documentTypeItem) {
+
+                    <mat-option [value]="documentTypeItem.name">
+                      {{documentTypeItem.name}}
+                    </mat-option>
+                    }
+
+                  </mat-select>
+
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Selected document type: <b>{{selectedDocumentType}}</b>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {{selectedDocumentTypeDescription}}
+
+              </td>
+            </tr>
+          </table>
+
+        </td>
+        <td>
+
+          <table>
+            <tr>
+              <td>
+
+                <mat-form-field>
+                  <mat-label>Export Option</mat-label>
+
+                  <mat-select [(ngModel)]="selectedExportOption" name="exportOption">
+                    @for (item of exportOptions; track item) {
+
+                    <mat-option [value]="item.name">
+                      {{item.name}}
+                    </mat-option>
+
+                    }
+
+
+                  </mat-select>
+
+                </mat-form-field>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Selected option: <b> {{selectedExportOption}}</b>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {{selectedExportOptionDescription}}
+
+              </td>
+            </tr>
+          </table>
+
+        </td>
+        <td>
+
+          <button matButton="filled" (click)="exportData()">
+            Export
+          </button>
+
+        </td>
+      </tr>
+    </table>
+    }
+  </div>
+  }
+</div>-->

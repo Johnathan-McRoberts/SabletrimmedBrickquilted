@@ -28,6 +28,13 @@ namespace SabletrimmedBrickquilted.API.Extensions
 
         public static void ConfigureCors(this WebApplicationBuilder builder)
         {
+
+            //app.UseCors(builder => builder
+            //    .AllowAnyOrigin()
+            //    .AllowAnyHeader()
+            //    .AllowAnyMethod());
+
+
             string[] allowedOrigins = 
                 builder.Configuration
                 .GetSection("Cors:AllowedOrigins")
@@ -38,6 +45,7 @@ namespace SabletrimmedBrickquilted.API.Extensions
                 options.AddPolicy("ModuleFederation", policy =>
                 {
                     policy.WithOrigins(allowedOrigins)
+                          .AllowAnyOrigin()
                           .AllowAnyHeader()
                           .AllowAnyMethod();
                 });
