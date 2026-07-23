@@ -1,4 +1,6 @@
-﻿using SabletrimmedBrickquilted.Domain.Books;
+﻿using MongoDB.Driver;
+
+using SabletrimmedBrickquilted.Domain.Books;
 
 using SabletrimmedBrickquilted.Dtos.ImportExportDtos;
 
@@ -174,6 +176,41 @@ namespace SabletrimmedBrickquilted.Services.Services
                 };
 
             return exportResponse;
+        }
+
+        public async Task<ExportDisplayResponseDto?> ExportDisplay(
+            ExportRequestDto exportRequest)
+        {
+            ExportResponseDto? exportResponse = null;
+
+            if (exportRequest.DocumentType == ExportTypeCsv)
+            {
+                exportResponse = await ExportToCsv(exportRequest.UserId, exportRequest.Options);
+            }
+            else if (exportRequest.DocumentType == ExportTypeJson)
+            {
+                exportResponse = await ExportToJson(exportRequest.UserId, exportRequest.Options);
+            }
+            else
+            {
+                throw new ArgumentException(
+                    $"Document type {exportRequest.DocumentType} is not supported.");
+            }
+
+            if (exportResponse == null)
+            {
+                return null;
+            }
+
+            // convert stream to string
+            StreamReader reader = new StreamReader(exportResponse.ExportContent);
+            string text = reader.ReadToEnd();
+
+            return new ExportDisplayResponseDto
+            {
+                ContentType = exportRequest.DocumentType,
+                DisplayContent = text
+            };
         }
     }
 }

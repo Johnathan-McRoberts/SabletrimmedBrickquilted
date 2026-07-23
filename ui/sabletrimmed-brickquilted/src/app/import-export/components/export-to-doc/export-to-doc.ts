@@ -17,13 +17,11 @@ import {
   IDocumentType,
   IExportOption,
 } from '../../models/export-options-response-dto';
+import { ExportDisplayResponseDto } from '../../models/export-display-response-dto';
 
 import { DownloadService } from '../../services/download-service';
 import { ExportService } from '../../services/export-service';
 import { LoggedInService } from './../../../shared/services/logged-in-service';
-import { BookTablesService } from './../../../tables/services/book-tables-service';
-
-import { IReadBook } from './../../../shared/models/books/iread-book';
 
 @Component({
   selector: 'app-export-to-doc',
@@ -45,13 +43,13 @@ export class ExportToDoc implements OnInit {
   private _exportService = inject(ExportService);
   private _loggedInService = inject(LoggedInService);
   private _downloadService = inject(DownloadService);
-  private _bookDataService = inject(BookTablesService);
   private _snackBar = inject(MatSnackBar);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   private _documentTypes: IDocumentType[] | undefined = undefined;
   private _exportOptions: IExportOption[] | undefined = undefined;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  constructor() {
     this._documentTypes = [];
     this._exportOptions = [];
   }
@@ -82,18 +80,21 @@ export class ExportToDoc implements OnInit {
   }
 
   getExportOptions() {
-    this._exportService.getExportOptions().subscribe((resp) => {
-      console.log('Rxed resp:', JSON.stringify(resp));
-      if (resp !== null && resp !== undefined && resp.documentTypes.length > 0) {
-        this._documentTypes = resp.documentTypes;
-        this._exportOptions = resp.exportOptions;
+    this._exportService
+      .getExportOptions()
+      .subscribe(
+        (resp: ExportOptionsResponseDto) => {
+          console.log('Rxed resp:', JSON.stringify(resp));
+          if (resp !== null && resp !== undefined && resp.documentTypes.length > 0) {
+            this._documentTypes = resp.documentTypes;
+            this._exportOptions = resp.exportOptions;
 
-        this.changeDetectorRef.detectChanges();
-      } else {
-        // an error occured
-        this.openSnackBar('Get Export options failed: ', 'OK');
-      }
-    });
+            this.changeDetectorRef.detectChanges();
+          } else {
+            // an error occured
+            this.openSnackBar('Get Export options failed: ', 'OK');
+          }
+        });
   }
 
   // selected export option
@@ -167,11 +168,11 @@ export class ExportToDoc implements OnInit {
     if (this.hasDocumentTypeSelection && this.hasExportOption) {
       console.log(
         'Getting report of type: ' +
-          this._selectedDocumentType +
-          ' with export option: ' +
-          this._selectedExportOption +
-          ' for user: ' +
-          this._loggedInService.loggedInUserName,
+        this._selectedDocumentType +
+        ' with export option: ' +
+        this._selectedExportOption +
+        ' for user: ' +
+        this._loggedInService.loggedInUserName,
       );
 
       const user: string = this._loggedInService.loggedInUserName;
@@ -185,26 +186,35 @@ export class ExportToDoc implements OnInit {
   readonly $loadingDisplayData = signal(false);
 
   showExportData() {
+
+    const user: string = this._loggedInService.loggedInUserName;
+    const documentType: string = this._selectedDocumentType!;
+    const exportOption: string = this._selectedExportOption!;
+
     this.$loadingDisplayData.set(true);
     this.displayText = 'Formatting....';
 
-    this._bookDataService.getReadBooks().subscribe((resp) => {
-      console.log('Rxed resp:', JSON.stringify(resp).substring(0, 100));
-      if (resp !== null && resp !== undefined && resp.length > 0) {
-        // got the data ok
-        const tallies = resp;
+    this._exportService
+      .getExportDisplay(user, documentType, exportOption)
+      .subscribe((resp: ExportDisplayResponseDto) => {
 
-        this.displayText = JSON.stringify(tallies, undefined, 2);
-        this.exportDataToDisplay = true;
-        this.$loadingDisplayData.set(false);
-      } else {
-        // an error occured
-        this.openSnackBar('Get Books failed: ', 'OK');
-      }
-    });
+        console.log('Rxed resp:', JSON.stringify(resp).substring(0, 100));
+
+        if (resp !== null && resp !== undefined && resp.displayContent.length > 0) {
+
+          // got the data ok
+          this.displayText = resp.displayContent;
+
+          this.exportDataToDisplay = true;
+          this.$loadingDisplayData.set(false);
+        } else {
+
+          // an error occured
+          this.openSnackBar('Get display export failed: ', 'OK');
+        }
+      });
 
     this.exportDataToDisplay = true;
-    //this.displayText = `Exporting ${this.selectedDocumentType} as ${this.selectedExportOption}`;
   }
 
   public displayText = '';

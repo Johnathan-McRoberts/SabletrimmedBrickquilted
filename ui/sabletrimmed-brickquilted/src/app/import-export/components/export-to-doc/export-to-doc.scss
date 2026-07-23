@@ -46,13 +46,11 @@
   width: 90%;
   margin: 15px;
 }
+
 .export-display-content {
   width: 90%;
   height: 400px;
-}
-
-textarea.flexheight {
-  field-sizing: content;
-  width: 100%;
-  min-height: 2rem;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: scroll;
 }
