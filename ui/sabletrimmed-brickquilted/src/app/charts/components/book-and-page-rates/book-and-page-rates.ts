@@ -29,10 +29,12 @@ import {
   ChartEvent,
   ChartType
 } from 'chart.js';
+
 import { BaseChartDirective } from 'ng2-charts';
+
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-//import { Colors } from 'chart.js';
+import { Colors } from 'chart.js';
 // Register Chart.js components
 Chart.register(
   BarController,
@@ -44,11 +46,9 @@ Chart.register(
   ChartDataLabels,
 );
 
-
 import { ChartDataService } from './../../services/chart-data-service';
 
 import { IBooksTotal } from './../../models/books-total';
-
 
 export const CHART_COLORS = {
   red: 'rgb(255, 99, 132)',
@@ -63,19 +63,6 @@ export const CHART_COLORS = {
   purple: 'rgb(153, 102, 255)',
   grey: 'rgb(201, 203, 207)'
 };
-
-//const NAMED_COLORS = [
-//  CHART_COLORS.red,
-//  CHART_COLORS.redFaint,
-//  CHART_COLORS.orange,
-//  CHART_COLORS.yellow,
-//  CHART_COLORS.green,
-//  CHART_COLORS.blue,
-//  CHART_COLORS.blueFaint,
-//  CHART_COLORS.purple,
-//  CHART_COLORS.grey,
-//];
-
 
 @Component({
   selector: 'app-book-and-page-rates',
@@ -108,17 +95,10 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
 
         this.SetupDataSets(resp);
 
-        console.log('labels:',
-          JSON.stringify(this.chartLabels).substring(0, 200));
-        console.log('books:',
-          JSON.stringify(this.bookTotalsData).substring(0, 200));
-        console.log('pages:',
-          JSON.stringify(this.pageTotalsData).substring(0, 200));
-
         this.$loadingData.set(false);
       } else {
         // an error occured
-        this.openSnackBar('Get Book tallies failed: ', 'OK');
+        this.openSnackBar('Get chart books totals failed: ', 'OK');
       }
     });
   }
@@ -159,8 +139,8 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
     }
     else {
       const step: number = dates.length / 100;
-      let location: number = 0;
-      let index: number = 0;
+      let location = 0;
+      let index = 0;
 
       const text: string = 'step = ' + step + ' count = ' + dates.length;
       console.log(text);
@@ -177,11 +157,20 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
         location += step;
         index = Math.floor(location);
         //Math.floor( 
-      } while (index < dates.length);
+      } while (index <= dates.length - 1);
+
+      trimmedDates.push(dates[dates.length - 1]);
+      trimmedBooks.push(books[dates.length - 1]);
+      trimmedPages.push(pages[dates.length - 1]);
 
       this.chartLabels = trimmedDates;
       this.bookTotalsData = trimmedBooks;
       this.pageTotalsData = trimmedPages;
+
+
+      const finalText: string =
+        'final index = ' + index + ' trimmedPages length = ' + trimmedPages.length;
+      console.log(finalText);
     }
   }
 
@@ -202,7 +191,7 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
       ],
       labels: this.chartLabels,
     }
-    console.log("new chart data \n" + JSON.stringify(newChartData));
+
     return newChartData;
   });
 
@@ -233,7 +222,6 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
     return dataset;
   }
 
-
   public getbooksChartDataSets(booksData: number[]) {
     const dataset =
     {
@@ -260,16 +248,11 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
     return dataset;
   }
 
-  private newLabel?= 'New label';
-
   public chartLabels: Date[] = [
-
     this.newDate(1),
     this.newDate(3),
   ];
-
   public bookTotalsData: number[] = [28, 48];
-
   public pageTotalsData: number[] = [180, 480];
 
   public lineChartOptions: ChartConfiguration['options'] = {
@@ -333,11 +316,19 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
         type: 'linear',
         display: true,
         position: 'left',
+        title: {
+          display: true,
+          text: 'Books'
+        },
       },
       y1: {
         type: 'linear',
         display: true,
         position: 'right',
+        title: {
+          display: true,
+          text: 'Pages'
+        },
 
         // grid line settings
         grid: {
@@ -356,7 +347,6 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-
   newDate(days: number): Date {
     return DateTime.now().plus({ days }).toJSDate();
   }
@@ -365,7 +355,6 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
     const date: DateTime = DateTime.utc(year, month, day);
     return date.toJSDate();
   }
-
 
   // events
   public chartClicked({
@@ -387,5 +376,4 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
   }): void {
     //console.log(event, active);
   }
-
 }
