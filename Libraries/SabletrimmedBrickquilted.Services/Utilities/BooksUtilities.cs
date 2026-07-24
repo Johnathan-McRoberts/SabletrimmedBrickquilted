@@ -5,7 +5,6 @@ namespace SabletrimmedBrickquilted.Services.Utilities
 {
     public static class BooksUtilities
     {
-
         public static ReadBook GetReadBook(BookRead book)
         {
             return new ReadBook()

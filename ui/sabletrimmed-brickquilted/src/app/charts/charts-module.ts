@@ -10,6 +10,8 @@ import { SharedModule } from './../shared/shared-module';
 import { ChartsOverview } from './components/charts-overview/charts-overview';
 import { BookAndPageRates } from './components/book-and-page-rates/book-and-page-rates';
 
+import { ChartDataService } from './services/chart-data-service';
+
 @NgModule({
   declarations: [ChartsOverview],
   imports: [
@@ -22,5 +24,6 @@ import { BookAndPageRates } from './components/book-and-page-rates/book-and-page
 
     SharedModule],
   exports: [ChartsOverview],
+  providers: [ChartDataService],
 })
 export class ChartsModule {}
