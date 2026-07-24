@@ -11,18 +11,38 @@ import {
 import { CommonModule } from '@angular/common';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 
-//import { ViewportRuler } from '@angular/cdk/scrolling';
+import { DateTime } from 'luxon';
+import 'chartjs-adapter-luxon';
+
 import {
-ChartData,
-ChartOptions,
-ChartConfiguration,
-ChartEvent,
-ChartType
+  Chart,
+  ChartConfiguration,
+  Plugin,
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Legend,
+  Tooltip,
+  ChartEvent,
+  ChartType
 } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 //import { Colors } from 'chart.js';
+// Register Chart.js components
+Chart.register(
+  BarController,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Legend,
+  Tooltip,
+  ChartDataLabels,
+);
 
 
 import { ChartDataService } from './../../services/chart-data-service';
@@ -30,11 +50,40 @@ import { ChartDataService } from './../../services/chart-data-service';
 import { IBooksTotal } from './../../models/books-total';
 
 
-//Chart.register(Colors);
+export const CHART_COLORS = {
+  red: 'rgb(255, 99, 132)',
+  redFaint: 'rgba(255, 99, 132, 0.5)',
+  orange: 'rgb(255, 159, 64)',
+  yellow: 'rgb(255, 205, 86)',
+  orangeFaint: 'rgba(255, 159, 64, 0.5)',
+  yellowFaint: 'rgba(255, 205, 86, 0.5)',
+  green: 'rgb(75, 192, 192)',
+  blue: 'rgb(54, 162, 235)',
+  blueFaint: 'rgba(54, 162, 235, 0.5)',
+  purple: 'rgb(153, 102, 255)',
+  grey: 'rgb(201, 203, 207)'
+};
+
+//const NAMED_COLORS = [
+//  CHART_COLORS.red,
+//  CHART_COLORS.redFaint,
+//  CHART_COLORS.orange,
+//  CHART_COLORS.yellow,
+//  CHART_COLORS.green,
+//  CHART_COLORS.blue,
+//  CHART_COLORS.blueFaint,
+//  CHART_COLORS.purple,
+//  CHART_COLORS.grey,
+//];
+
 
 @Component({
   selector: 'app-book-and-page-rates',
-  imports: [BaseChartDirective, CommonModule, MatProgressSpinnerModule],
+  imports: [
+    BaseChartDirective,
+    CommonModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule],
   templateUrl: './book-and-page-rates.html',
   styleUrl: './book-and-page-rates.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,6 +92,7 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
   readonly $loadingData = signal(true);
 
   private _chartDataService = inject(ChartDataService);
+  private _snackBar = inject(MatSnackBar);
 
   ngOnInit() {
     console.log("BookAndPageRates: ngOnInit")
@@ -55,121 +105,246 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
     this._chartDataService.getBooksTotals().subscribe((resp: IBooksTotal[]) => {
       console.log('Rxed resp:', JSON.stringify(resp).substring(0, 100));
       if (resp !== null && resp !== undefined && resp.length > 0) {
-        // got the data ok
-        //this._tallies = resp;
-        //this.dataSource = new MatTableDataSource(this._tallies);
-        //this.$hasTallyData.set(true);
+
+        this.SetupDataSets(resp);
+
+        console.log('labels:',
+          JSON.stringify(this.chartLabels).substring(0, 200));
+        console.log('books:',
+          JSON.stringify(this.bookTotalsData).substring(0, 200));
+        console.log('pages:',
+          JSON.stringify(this.pageTotalsData).substring(0, 200));
+
         this.$loadingData.set(false);
       } else {
         // an error occured
-        //this.openSnackBar('Get Book tallies failed: ', 'OK');
+        this.openSnackBar('Get Book tallies failed: ', 'OK');
       }
     });
+  }
+
+  private SetupDataSets(booksTotals: IBooksTotal[]) {
+    const dates: Date[] = [];
+    const books: number[] = [];
+    const pages: number[] = [];
+
+    for (let i = 0; i < booksTotals.length; i++) {
+      const bookTotal = booksTotals[i];
+
+      if (i < 3) {
+        const text: string = 'bookTotal[' + i + ']';
+        console.log(text,
+          JSON.stringify(bookTotal));
+      }
+
+      const year: number = +bookTotal.datestring.substring(0, 4);
+      const month: number = +bookTotal.datestring.substring(5, 7);
+      const day: number = +bookTotal.datestring.substring(8, 10);
+
+      const theDate: DateTime = DateTime.utc(year, month, day);
+
+      if (theDate) {
+
+        dates.push(theDate.toJSDate());
+        books.push(bookTotal.totalBooksRead);
+        pages.push(bookTotal.totalPagesRead);
+      }
+    }
+
+    if (dates.length <= 100) {
+      this.chartLabels = dates;
+      this.bookTotalsData = books;
+      this.pageTotalsData = pages;
+
+    }
+    else {
+      const step: number = dates.length / 100;
+      let location: number = 0;
+      let index: number = 0;
+
+      const text: string = 'step = ' + step + ' count = ' + dates.length;
+      console.log(text);
+
+      const trimmedDates: Date[] = [];
+      const trimmedBooks: number[] = [];
+      const trimmedPages: number[] = [];
+
+      do {
+        trimmedDates.push(dates[index]);
+        trimmedBooks.push(books[index]);
+        trimmedPages.push(pages[index]);
+
+        location += step;
+        index = Math.floor(location);
+        //Math.floor( 
+      } while (index < dates.length);
+
+      this.chartLabels = trimmedDates;
+      this.bookTotalsData = trimmedBooks;
+      this.pageTotalsData = trimmedPages;
+    }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, { duration: 3000 });
   }
 
   ngAfterViewInit() {
     console.log("BookAndPageRates: ngAfterViewInit")
   }
 
+  readonly $lineChartsData = computed<ChartConfiguration['data']>(() => {
+
+    const newChartData: ChartConfiguration['data'] = {
+      datasets: [
+        this.getbooksChartDataSets(this.bookTotalsData),
+        this.getPagesChartDataSets(this.pageTotalsData),
+      ],
+      labels: this.chartLabels,
+    }
+    console.log("new chart data \n" + JSON.stringify(newChartData));
+    return newChartData;
+  });
+
+  public getPagesChartDataSets(pagesData: number[]) {
+    const dataset =
+    {
+      data: pagesData,
+      label: 'Page Totals',
+      borderColor: CHART_COLORS.red,
+      backgroundColor: CHART_COLORS.red,
+
+      borderWidth: 1,
+
+      pointStyle: 'circle',
+      pointRadius: 2,
+      pointHoverRadius: 15,
 
 
+      pointBackgroundColor: CHART_COLORS.redFaint,
+      pointBorderColor: CHART_COLORS.red,
+      pointHoverBackgroundColor: CHART_COLORS.yellowFaint,
+      pointHoverBorderColor: CHART_COLORS.grey,
 
-  //readonly $hasTallyData = signal(false);
+      fill: false,
+      yAxisID: 'y1',
+    };
 
-  //private _bookTablesService = inject(BookTablesService);
+    return dataset;
+  }
 
-  //private _snackBar = inject(MatSnackBar);
 
-  //private _tallies: ITalliedBook[] | undefined = undefined;
+  public getbooksChartDataSets(booksData: number[]) {
+    const dataset =
+    {
+      data: booksData,
+      label: 'Book Totals',
+      backgroundColor: CHART_COLORS.blueFaint,
+      borderColor: CHART_COLORS.blue,
+      borderWidth: 1,
 
+      pointStyle: 'circle',
+      pointRadius: 2,
+      pointHoverRadius: 15,
+
+
+      pointBackgroundColor: CHART_COLORS.blueFaint,
+      pointBorderColor: CHART_COLORS.blue,
+      pointHoverBackgroundColor: CHART_COLORS.orangeFaint,
+      pointHoverBorderColor: CHART_COLORS.grey,
+
+      fill: false,
+      yAxisID: 'y',
+    };
+
+    return dataset;
+  }
 
   private newLabel?= 'New label';
 
-  public lineChartData: ChartConfiguration['data'] = {
-    datasets: [
-      {
-        data: [65, 59, 80, 81, 56, 55, 40],
-        label: 'Series A',
-        backgroundColor: 'rgba(148,159,177,0.2)',
-        borderColor: 'rgba(148,159,177,1)',
-        pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-        fill: 'origin',
-      },
-      {
-        data: [28, 48, 40, 19, 86, 27, 90],
-        label: 'Series B',
-        backgroundColor: 'rgba(77,83,96,0.2)',
-        borderColor: 'rgba(77,83,96,1)',
-        pointBackgroundColor: 'rgba(77,83,96,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(77,83,96,1)',
-        fill: 'origin',
-      },
-      {
-        data: [180, 480, 770, 90, 1000, 270, 400],
-        label: 'Series C',
-        yAxisID: 'y1',
-        backgroundColor: 'rgba(255,0,0,0.3)',
-        borderColor: 'red',
-        pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-        fill: 'origin',
-      },
-    ],
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  };
+  public chartLabels: Date[] = [
+
+    this.newDate(1),
+    this.newDate(3),
+  ];
+
+  public bookTotalsData: number[] = [28, 48];
+
+  public pageTotalsData: number[] = [180, 480];
 
   public lineChartOptions: ChartConfiguration['options'] = {
-    elements: {
-      line: {
-        tension: 0.5,
+
+    interaction: {
+      intersect: false
+    },
+    responsive: true,
+
+    plugins: {
+      title: {
+        display: true,
+        text: 'Books and Pages Totals'
       },
+
+      datalabels: {
+        labels: {
+          title: {
+            color: '#FFFFFF',
+            anchor: 'start',
+            align: 'right',
+            textAlign: 'left',
+            font: {
+              weight: 'normal',
+              size: 1,
+            },
+          },
+          value: {
+            color: '#FFFFFF',
+            anchor: 'start',
+            align: 'left',
+            font: {
+              weight: 'bold',
+              size: 1,
+            },
+          },
+        },
+      },
+
+      decimation: {
+        algorithm: 'lttb',
+        enabled: true,
+        samples: 100
+      }
     },
     scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
+      x: {
+        type: 'time',
+        time: {
+          // Luxon format string
+          tooltipFormat: 'DD T'
+        },
+        title: {
+          display: true,
+          text: 'Date'
+        },
+      },
+
+
       y: {
+        type: 'linear',
+        display: true,
         position: 'left',
       },
       y1: {
+        type: 'linear',
+        display: true,
         position: 'right',
+
+        // grid line settings
         grid: {
-          color: 'rgba(255,0,0,0.3)',
-        },
-        ticks: {
-          color: 'red',
+          drawOnChartArea: false, // only want the grid lines for one axis to show up
         },
       },
-    },
-
-    plugins: {
-      legend: { display: true },
-      //annotation: {
-      //  annotations: [
-      //    {
-      //      type: 'line',
-      //      scaleID: 'x',
-      //      value: 'March',
-      //      borderColor: 'orange',
-      //      borderWidth: 2,
-      //      label: {
-      //        display: true,
-      //        position: 'center',
-      //        color: 'orange',
-      //        content: 'LineAnno',
-      //        font: {
-      //          weight: 'bold',
-      //        },
-      //      },
-      //    },
-      //  ],
-      //},
-    },
+    }
   };
 
   public lineChartType: ChartType = 'line';
@@ -177,17 +352,20 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
   readonly $chartMaxHeight = computed(() => {
 
     return 600;
-    //const data = this.$data();
-    //const webLineHeightPx = 44;
-    //const mobileLineHeightPx = 60;
-    //const baseHeightPx = this.$isMobile()
-    //  ? mobileLineHeightPx
-    //  : webLineHeightPx;
-    //const minimumLength = data.length === 1 ? 2 : data.length; //If has only 1 line of data, show at least 2 lines height
-    //return data ? minimumLength * baseHeightPx : 300;
   });
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
+
+  newDate(days: number): Date {
+    return DateTime.now().plus({ days }).toJSDate();
+  }
+
+  newDateFromDay(day: number, month: number, year: number): Date {
+    const date: DateTime = DateTime.utc(year, month, day);
+    return date.toJSDate();
+  }
+
 
   // events
   public chartClicked({

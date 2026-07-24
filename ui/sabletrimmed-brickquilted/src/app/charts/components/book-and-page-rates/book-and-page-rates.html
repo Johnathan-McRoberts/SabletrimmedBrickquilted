@@ -8,12 +8,13 @@
 <div class="p-3 mb-2 bg-light text-dark vh-75 vw-75">
   <canvas baseChart
           [type]="'line'"
-          [data]="lineChartData"
+          [data]="$lineChartsData()"
           [options]="lineChartOptions"
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"
           class="chart">
   </canvas>
+
 </div>
 }
 

@@ -4,6 +4,8 @@
     {
         public DateTime Date { get; set; }
 
+        public string Datestring => Date.ToString("yyyy-MM-dd");
+
         public DateTime StartDate { get; set; }
 
         public int DaysSinceStart { get; set; }
