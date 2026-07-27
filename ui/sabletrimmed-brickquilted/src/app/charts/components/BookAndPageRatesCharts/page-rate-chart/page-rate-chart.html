@@ -1,0 +1,20 @@
+<p>page-rate-chart works!</p>
+@let loadingData = $loadingData();
+
+@if (loadingData) {
+  <div class="d-flex justify-content-center align-items-center">
+    <mat-spinner></mat-spinner>
+  </div>
+} @else {
+  <div class="p-3 mb-2 bg-light text-dark vh-75 vw-75">
+    <canvas
+      baseChart
+      [type]="'line'"
+      [data]="$lineChartsData()"
+      [options]="lineChartOptions"
+      (chartClick)="chartClicked($event)"
+      class="chart"
+    >
+    </canvas>
+  </div>
+}

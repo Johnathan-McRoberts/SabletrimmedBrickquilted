@@ -6,7 +6,7 @@
       <mat-label>Export Type</mat-label>
       <mat-select [(ngModel)]="selectedExportOpt" (ngModelChange)="onExportSelection()">
         @for (exportOption of exportOptions; track exportOption) {
-        <mat-option [value]="exportOption.name">{{ exportOption.name }}</mat-option>
+          <mat-option [value]="exportOption.name">{{ exportOption.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -17,7 +17,9 @@
       <mat-label>Document Type</mat-label>
       <mat-select [(ngModel)]="selectedDocType" (ngModelChange)="onDocSelection()">
         @for (docType of documentTypes; track docType) {
-        <mat-option [value]="docType.name">{{ docType.name }} ( {{ docType.description }} )</mat-option>
+          <mat-option [value]="docType.name"
+            >{{ docType.name }} ( {{ docType.description }} )</mat-option
+          >
         }
       </mat-select>
     </mat-form-field>
@@ -25,23 +27,27 @@
 
   <div class="buttons button-options-container">
     <div class="mx-4 px-0 py-2 bg-red d-flex justify-content-between align-items-start">
-      <button mat-raised-button
-              type="submit"
-              color="primary"
-              (click)="showExportData()"
-              [disabled]="isDisabled()"
-              matButton="filled"
-              class="px-1">
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        (click)="showExportData()"
+        [disabled]="isDisabled()"
+        matButton="filled"
+        class="px-1"
+      >
         Display
       </button>
 
-      <button mat-raised-button
-              type="submit"
-              color="primary"
-              (click)="exportData()"
-              [disabled]="isDisabled()"
-              matButton="filled"
-              class="px-1">
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        (click)="exportData()"
+        [disabled]="isDisabled()"
+        matButton="filled"
+        class="px-1"
+      >
         Export
       </button>
     </div>
@@ -49,12 +55,12 @@
 </div>
 <div>
   @if (exportDataToDisplay && !loadingDisplayData) {
-  <pre>
+    <pre>
   <textarea rows="40" cols="128" class="export-display-content" readonly>{{displayText}}</textarea>
     </pre>
   } @else {
-  <div class="display bg-red">
-    <p>No display data</p>
-  </div>
+    <div class="display bg-red">
+      <p>No display data</p>
+    </div>
   }
 </div>

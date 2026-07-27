@@ -8,7 +8,6 @@ import { LoggedInService } from './../../../shared/services/logged-in-service';
   styleUrl: './forms-overview.scss',
 })
 export class FormsOverview implements OnInit {
-
   private loggedInService = inject(LoggedInService);
   public user = '';
 

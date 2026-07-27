@@ -5,8 +5,8 @@ import {
   ViewChild,
   signal,
   inject,
-  OnInit, AfterViewInit
-
+  OnInit,
+  AfterViewInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -27,7 +27,7 @@ import {
   Legend,
   Tooltip,
   ChartEvent,
-  ChartType
+  ChartType,
 } from 'chart.js';
 
 import { BaseChartDirective } from 'ng2-charts';
@@ -46,9 +46,9 @@ Chart.register(
   ChartDataLabels,
 );
 
-import { ChartDataService } from './../../services/chart-data-service';
+import { ChartDataService } from './../../../services/chart-data-service';
 
-import { IBooksTotal } from './../../models/books-total';
+import { IBooksTotal } from './../../../models/books-total';
 
 export const CHART_COLORS = {
   red: 'rgb(255, 99, 132)',
@@ -61,16 +61,12 @@ export const CHART_COLORS = {
   blue: 'rgb(54, 162, 235)',
   blueFaint: 'rgba(54, 162, 235, 0.5)',
   purple: 'rgb(153, 102, 255)',
-  grey: 'rgb(201, 203, 207)'
+  grey: 'rgb(201, 203, 207)',
 };
 
 @Component({
   selector: 'app-book-and-page-rates',
-  imports: [
-    BaseChartDirective,
-    CommonModule,
-    MatProgressSpinnerModule,
-    MatSnackBarModule],
+  imports: [BaseChartDirective, CommonModule, MatProgressSpinnerModule, MatSnackBarModule],
   templateUrl: './book-and-page-rates.html',
   styleUrl: './book-and-page-rates.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -82,7 +78,7 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
   private _snackBar = inject(MatSnackBar);
 
   ngOnInit() {
-    console.log("BookAndPageRates: ngOnInit")
+    console.log('BookAndPageRates: ngOnInit');
 
     this.$loadingData.set(true);
     this.getTallies();
@@ -92,7 +88,6 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
     this._chartDataService.getBooksTotals().subscribe((resp: IBooksTotal[]) => {
       console.log('Rxed resp:', JSON.stringify(resp).substring(0, 100));
       if (resp !== null && resp !== undefined && resp.length > 0) {
-
         this.SetupDataSets(resp);
 
         this.$loadingData.set(false);
@@ -113,8 +108,7 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
 
       if (i < 3) {
         const text: string = 'bookTotal[' + i + ']';
-        console.log(text,
-          JSON.stringify(bookTotal));
+        console.log(text, JSON.stringify(bookTotal));
       }
 
       const year: number = +bookTotal.datestring.substring(0, 4);
@@ -124,7 +118,6 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
       const theDate: DateTime = DateTime.utc(year, month, day);
 
       if (theDate) {
-
         dates.push(theDate.toJSDate());
         books.push(bookTotal.totalBooksRead);
         pages.push(bookTotal.totalPagesRead);
@@ -135,9 +128,7 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
       this.chartLabels = dates;
       this.bookTotalsData = books;
       this.pageTotalsData = pages;
-
-    }
-    else {
+    } else {
       const step: number = dates.length / 100;
       let location = 0;
       let index = 0;
@@ -156,7 +147,7 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
 
         location += step;
         index = Math.floor(location);
-        //Math.floor( 
+        //Math.floor(
       } while (index <= dates.length - 1);
 
       trimmedDates.push(dates[dates.length - 1]);
@@ -166,7 +157,6 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
       this.chartLabels = trimmedDates;
       this.bookTotalsData = trimmedBooks;
       this.pageTotalsData = trimmedPages;
-
 
       const finalText: string =
         'final index = ' + index + ' trimmedPages length = ' + trimmedPages.length;
@@ -179,25 +169,23 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log("BookAndPageRates: ngAfterViewInit")
+    console.log('BookAndPageRates: ngAfterViewInit');
   }
 
   readonly $lineChartsData = computed<ChartConfiguration['data']>(() => {
-
     const newChartData: ChartConfiguration['data'] = {
       datasets: [
         this.getbooksChartDataSets(this.bookTotalsData),
         this.getPagesChartDataSets(this.pageTotalsData),
       ],
       labels: this.chartLabels,
-    }
+    };
 
     return newChartData;
   });
 
   public getPagesChartDataSets(pagesData: number[]) {
-    const dataset =
-    {
+    const dataset = {
       data: pagesData,
       label: 'Page Totals',
       borderColor: CHART_COLORS.red,
@@ -208,7 +196,6 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
       pointStyle: 'circle',
       pointRadius: 2,
       pointHoverRadius: 15,
-
 
       pointBackgroundColor: CHART_COLORS.redFaint,
       pointBorderColor: CHART_COLORS.red,
@@ -223,8 +210,7 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
   }
 
   public getbooksChartDataSets(booksData: number[]) {
-    const dataset =
-    {
+    const dataset = {
       data: booksData,
       label: 'Book Totals',
       backgroundColor: CHART_COLORS.blueFaint,
@@ -234,7 +220,6 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
       pointStyle: 'circle',
       pointRadius: 2,
       pointHoverRadius: 15,
-
 
       pointBackgroundColor: CHART_COLORS.blueFaint,
       pointBorderColor: CHART_COLORS.blue,
@@ -248,24 +233,20 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
     return dataset;
   }
 
-  public chartLabels: Date[] = [
-    this.newDate(1),
-    this.newDate(3),
-  ];
+  public chartLabels: Date[] = [this.newDate(1), this.newDate(3)];
   public bookTotalsData: number[] = [28, 48];
   public pageTotalsData: number[] = [180, 480];
 
   public lineChartOptions: ChartConfiguration['options'] = {
-
     interaction: {
-      intersect: false
+      intersect: false,
     },
     responsive: true,
 
     plugins: {
       title: {
         display: true,
-        text: 'Books and Pages Totals'
+        text: 'Books and Pages Totals',
       },
 
       datalabels: {
@@ -295,22 +276,21 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
       decimation: {
         algorithm: 'lttb',
         enabled: true,
-        samples: 100
-      }
+        samples: 100,
+      },
     },
     scales: {
       x: {
         type: 'time',
         time: {
           // Luxon format string
-          tooltipFormat: 'DD T'
+          tooltipFormat: 'DD T',
         },
         title: {
           display: true,
-          text: 'Date'
+          text: 'Date',
         },
       },
-
 
       y: {
         type: 'linear',
@@ -318,7 +298,7 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
         position: 'left',
         title: {
           display: true,
-          text: 'Books'
+          text: 'Books',
         },
       },
       y1: {
@@ -327,7 +307,7 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
         position: 'right',
         title: {
           display: true,
-          text: 'Pages'
+          text: 'Pages',
         },
 
         // grid line settings
@@ -335,13 +315,12 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
           drawOnChartArea: false, // only want the grid lines for one axis to show up
         },
       },
-    }
+    },
   };
 
   public lineChartType: ChartType = 'line';
 
   readonly $chartMaxHeight = computed(() => {
-
     return 600;
   });
 
@@ -357,23 +336,11 @@ export class BookAndPageRates implements OnInit, AfterViewInit {
   }
 
   // events
-  public chartClicked({
-    event,
-    active,
-  }: {
-    event?: ChartEvent;
-    active?: object[];
-  }): void {
+  public chartClicked({ event, active }: { event?: ChartEvent; active?: object[] }): void {
     console.log(event, active);
   }
 
-  public chartHovered({
-    event,
-    active,
-  }: {
-    event?: ChartEvent;
-    active?: object[];
-  }): void {
+  public chartHovered({ event, active }: { event?: ChartEvent; active?: object[] }): void {
     //console.log(event, active);
   }
 }

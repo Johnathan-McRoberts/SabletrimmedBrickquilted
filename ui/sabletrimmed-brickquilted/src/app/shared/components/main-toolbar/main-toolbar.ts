@@ -37,8 +37,7 @@ export class MainToolbar implements OnInit {
       this.user = newUserName;
       console.log('MainToolbar: displayUser:', this.displayUser);
     }
-   }
-
+  };
 
   ngOnInit() {
     console.log('MainToolbar: registering for the callback');

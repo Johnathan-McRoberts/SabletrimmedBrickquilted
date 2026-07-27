@@ -7,5 +7,7 @@ namespace SabletrimmedBrickquilted.Services.Interfaces
         Task<List<DeltaBooks>> GetBooksDeltas();
 
         Task<List<BooksTotal>> GetBooksTotals();
+
+        Task<List<BooksAndPagesRate>> GetAllRates();
     }
 }

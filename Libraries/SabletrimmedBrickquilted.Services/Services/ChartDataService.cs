@@ -12,6 +12,7 @@ namespace SabletrimmedBrickquilted.Services.Services
     public class ChartDataService : IChartDataService
     {
         public const int MinimumDays = 90;
+        public const int PreviousYearDelta = -365;
 
         public string Name => "ChartDataService";
 
@@ -29,12 +30,12 @@ namespace SabletrimmedBrickquilted.Services.Services
             List<BookRead> booksRead =
                 (await _booksRepository.GetAllBooksRead()).OrderBy(b => b.Date).ToList();
             if (booksRead.Count < 1)
-            { 
-                return []; 
+            {
+                return [];
             }
 
             // get all the deltas for the books read
-            List<BooksDelta> allBookDeltas = 
+            List<BooksDelta> allBookDeltas =
                 GetAllBooksDeltas(booksRead);
 
             // convert the BooksDelta to DeltaBooks and return the list
@@ -121,7 +122,7 @@ namespace SabletrimmedBrickquilted.Services.Services
             item.CountryTotals = new CategoryTotal[countryTotalsCount];
             for (int i = 0; i < countryTotalsCount; i++)
             {
-                Tuple<string, uint, double, uint, double> countryTotal = 
+                Tuple<string, uint, double, uint, double> countryTotal =
                     booksDelta.OverallTally.CountryTotals[i];
                 item.CountryTotals[i] =
                     new CategoryTotal()
@@ -188,6 +189,78 @@ namespace SabletrimmedBrickquilted.Services.Services
             }
 
             return bookDeltas;
+        }
+
+        public async Task<List<BooksAndPagesRate>> GetAllRates()
+        {
+            // get the books read from the repository
+            List<BookRead> booksRead =
+                (await _booksRepository.GetAllBooksRead()).OrderBy(b => b.Date).ToList();
+            if (booksRead.Count < 1)
+            {
+                return new List<BooksAndPagesRate>();
+            }
+
+            // create a list to hold the rates
+            List<BooksAndPagesRate> rates = [];
+
+            // clear the list and the counts
+            DateTime startDate = booksRead[0].Date;
+
+            // get all the dates a book has been read (after the first quarter)
+            HashSet<DateTime> uniqueDates =
+                booksRead
+                    .Where(b => (b.Date - startDate).Days >= MinimumDays)
+                    .Select(b => b.Date)
+                    .ToHashSet();
+
+            // Loop through the dates and calculate the rates for each date
+            foreach (DateTime date in uniqueDates)
+            {
+                List<BookRead> booksReadToDate =
+                    booksRead.Where(b => b.Date <= date).ToList();
+                BooksAndPagesRate rate = GetBooksAndPagesRate(startDate, date, booksReadToDate);
+                rates.Add(rate);
+            }
+
+            return rates;
+        }
+
+        private static BooksAndPagesRate GetBooksAndPagesRate(
+            DateTime startDate,
+            DateTime date,
+            List<BookRead> booksReadToDate)
+        {
+            DateTime lastYearStartDate =
+                booksReadToDate.Last().Date.AddDays(PreviousYearDelta);
+            List<BookRead> lastYearBooks =
+                booksReadToDate.Where(x => x.Date >= lastYearStartDate).ToList();
+
+            List<BookRead> lastTenBooks =
+                booksReadToDate.TakeLast(10).ToList();
+
+            return new BooksAndPagesRate()
+            {
+                Date = date,
+                StartDate = startDate,
+                DaysSinceStart = (date - startDate).Days,
+                OverallRates = GetTallyRate(date, booksReadToDate),
+                AnnualRates = GetTallyRate(date, lastYearBooks),
+                LastTenRates = GetTallyRate(date, lastTenBooks)
+            };
+        }
+
+        private static BooksAndPagesRate.TallyRate GetTallyRate(
+            DateTime date,
+            List<BookRead> booksSet)
+        {
+            DateTime startDate = booksSet.Min(b => b.Date);
+            return new BooksAndPagesRate.TallyRate()
+            {
+                DailyBooksReadRate = booksSet.Count / (float)(date - startDate).Days,
+                PageRate = booksSet.Sum(b => b.Pages) / (float)(date - startDate).Days,
+                PagesPerBookRate = booksSet.Sum(b => b.Pages) / (float)booksSet.Count
+            };
         }
     }
 }

@@ -34,5 +34,14 @@ namespace SabletrimmedBrickquilted.API.Controllers.API
                 await _chartDataService.GetBooksTotals();
             return booksTotals;
         }
+
+        [HttpGet]
+        [Route("all-rates")]
+        public async Task<List<BooksAndPagesRate>> GetAllRates()
+        {
+            List<BooksAndPagesRate> rates =
+                await _chartDataService.GetAllRates();
+            return rates;
+        }
     }
 }

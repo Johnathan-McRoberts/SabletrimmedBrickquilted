@@ -80,21 +80,18 @@ export class ExportToDoc implements OnInit {
   }
 
   getExportOptions() {
-    this._exportService
-      .getExportOptions()
-      .subscribe(
-        (resp: ExportOptionsResponseDto) => {
-          console.log('Rxed resp:', JSON.stringify(resp));
-          if (resp !== null && resp !== undefined && resp.documentTypes.length > 0) {
-            this._documentTypes = resp.documentTypes;
-            this._exportOptions = resp.exportOptions;
+    this._exportService.getExportOptions().subscribe((resp: ExportOptionsResponseDto) => {
+      console.log('Rxed resp:', JSON.stringify(resp));
+      if (resp !== null && resp !== undefined && resp.documentTypes.length > 0) {
+        this._documentTypes = resp.documentTypes;
+        this._exportOptions = resp.exportOptions;
 
-            this.changeDetectorRef.detectChanges();
-          } else {
-            // an error occured
-            this.openSnackBar('Get Export options failed: ', 'OK');
-          }
-        });
+        this.changeDetectorRef.detectChanges();
+      } else {
+        // an error occured
+        this.openSnackBar('Get Export options failed: ', 'OK');
+      }
+    });
   }
 
   // selected export option
@@ -168,11 +165,11 @@ export class ExportToDoc implements OnInit {
     if (this.hasDocumentTypeSelection && this.hasExportOption) {
       console.log(
         'Getting report of type: ' +
-        this._selectedDocumentType +
-        ' with export option: ' +
-        this._selectedExportOption +
-        ' for user: ' +
-        this._loggedInService.loggedInUserName,
+          this._selectedDocumentType +
+          ' with export option: ' +
+          this._selectedExportOption +
+          ' for user: ' +
+          this._loggedInService.loggedInUserName,
       );
 
       const user: string = this._loggedInService.loggedInUserName;
@@ -186,7 +183,6 @@ export class ExportToDoc implements OnInit {
   readonly $loadingDisplayData = signal(false);
 
   showExportData() {
-
     const user: string = this._loggedInService.loggedInUserName;
     const documentType: string = this._selectedDocumentType!;
     const exportOption: string = this._selectedExportOption!;
@@ -197,18 +193,15 @@ export class ExportToDoc implements OnInit {
     this._exportService
       .getExportDisplay(user, documentType, exportOption)
       .subscribe((resp: ExportDisplayResponseDto) => {
-
         console.log('Rxed resp:', JSON.stringify(resp).substring(0, 100));
 
         if (resp !== null && resp !== undefined && resp.displayContent.length > 0) {
-
           // got the data ok
           this.displayText = resp.displayContent;
 
           this.exportDataToDisplay = true;
           this.$loadingDisplayData.set(false);
         } else {
-
           // an error occured
           this.openSnackBar('Get display export failed: ', 'OK');
         }

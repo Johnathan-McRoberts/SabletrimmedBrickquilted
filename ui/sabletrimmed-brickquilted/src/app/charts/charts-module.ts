@@ -8,21 +8,23 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SharedModule } from './../shared/shared-module';
 
 import { ChartsOverview } from './components/charts-overview/charts-overview';
-import { BookAndPageRates } from './components/book-and-page-rates/book-and-page-rates';
+//import { BookAndPageRates } from './components/book-and-page-rates/book-and-page-rates';
+import { BooksAndPageRatesCharts } from './components/BookAndPageRatesCharts/books-and-page-rates-charts/books-and-page-rates-charts';
 
 import { ChartDataService } from './services/chart-data-service';
 
 @NgModule({
   declarations: [ChartsOverview],
   imports: [
-    BookAndPageRates,
+    BooksAndPageRatesCharts,
 
     CommonModule,
     MatButtonModule,
     MatIconModule,
     MatTabsModule,
 
-    SharedModule],
+    SharedModule,
+  ],
   exports: [ChartsOverview],
   providers: [ChartDataService],
 })

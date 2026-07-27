@@ -7,7 +7,6 @@ import { environment } from '../../../environments/environment';
 import { ExportOptionsResponseDto } from '../models/export-options-response-dto';
 import { ExportDisplayResponseDto } from '../models/export-display-response-dto';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -64,17 +63,16 @@ export class ExportService {
   public getExportDisplay(
     user: string,
     documentType: string,
-    exportOption: string)
-    : Observable<ExportDisplayResponseDto> {
+    exportOption: string,
+  ): Observable<ExportDisplayResponseDto> {
     // set up the options
     const url: string = this.baseUrl + `/api/Export/export-display`;
-
 
     // and the query parameters
     const queryParams: string =
       '?UserId=' + user + '&DocumentType=' + documentType + '&Options=' + exportOption;
 
-    // log the data  
+    // log the data
     console.log('Calling http.get url :\n', url);
     console.log('with options url :\n', queryParams);
 
